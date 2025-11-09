@@ -108,9 +108,12 @@ def create_page_data(pattern, variables):
     
     for var_name, var_value in variables.items():
         url = url.replace(f'{{{var_name}}}', var_value.lower().replace(' ', '-'))
-        
+
         # Handle capitalization in H1
-        if f'{{{var_name.capitalize()}}}' in h1:
+        # Try .title() first for multi-word variables (use_case -> Use_Case, tool_type -> Tool_Type)
+        if f'{{{var_name.title()}}}' in h1:
+            h1 = h1.replace(f'{{{var_name.title()}}}', var_value)
+        elif f'{{{var_name.capitalize()}}}' in h1:
             h1 = h1.replace(f'{{{var_name.capitalize()}}}', var_value)
         elif f'{{{var_name.upper()}}}' in h1:
             h1 = h1.replace(f'{{{var_name.upper()}}}', var_value)
@@ -162,7 +165,7 @@ def generate_content_with_claude(page_data, section):
     
     try:
         message = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-3-5-sonnet-20241022",
             max_tokens=template_config['max_tokens'],
             temperature=template_config.get('temperature', 0.7),
             messages=[
