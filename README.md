@@ -33,10 +33,17 @@ PSEO-/
 │   ├── statistics_agent.py       # ⭐ NEW: Market data & statistics
 │   └── schema_markup.py          # ⭐ NEW: SEO schema markup
 │
+├── docs/                         # Documentation
+│   ├── marketing/                # Marketing strategy documents
+│   ├── archive/                  # Archived/outdated documentation
+│   ├── PROJECT_OVERVIEW.md       # Technical overview
+│   └── TESTING_GUIDE.md          # Quality testing procedures
+│
 ├── agent_framework.py             # Base agent classes and data structures
 ├── pseo_orchestrator.py          # Multi-agent orchestrator
 ├── batch_generator.py            # Phased rollout batch processor
 ├── generate_pages.py             # Simple single-agent generator
+├── test_single_page.py           # Single page testing script
 │
 ├── output/                       # Generated pages
 │   ├── page_*.json              # Individual page files
@@ -47,7 +54,10 @@ PSEO-/
 ├── .env                          # API keys (create from .env.example)
 ├── .env.example                  # Environment template
 ├── requirements.txt              # Python dependencies
-└── README.md                     # This file
+├── README.md                     # This file
+├── START_HERE.md                 # Quick start guide
+├── ARCHITECTURE.md               # System architecture documentation
+└── AGENTS.md                     # Agent specifications
 ```
 
 ## 🚀 Quick Start
@@ -413,6 +423,14 @@ export GEMINI_API_KEY="your-key-here"
 - All exceptions logged to `failed_tasks.json`
 - Checkpoint system prevents data loss
 - Resume capability from any point
+
+## 📚 Documentation
+
+- **[START_HERE.md](START_HERE.md)** - Quick start guide for new users
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Detailed system architecture
+- **[AGENTS.md](AGENTS.md)** - Complete agent specifications
+- **[TESTING_GUIDE.md](docs/TESTING_GUIDE.md)** - Quality testing procedures
+- **[PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)** - Technical overview
 
 ## 📝 Next Steps
 
