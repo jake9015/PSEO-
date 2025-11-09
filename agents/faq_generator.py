@@ -35,7 +35,7 @@ class FAQGeneratorAgent(BaseAgent):
 
         task = message.task
         pattern_id = task.get('pattern_id', '')
-        count = task.get('count', 5)
+        count = task.get('count', 10)  # Updated from 5 to 10 FAQs for better SEO
         blueprint = message.context.get('blueprint', {})
         variables = blueprint.get('pseo_variables', {})
 
@@ -106,7 +106,7 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
             response = self.genai_model.generate_content(
                 prompt,
                 generation_config=genai.types.GenerationConfig(
-                    max_output_tokens=2000,
+                    max_output_tokens=4000,  # Increased from 2000 to support 10 FAQs
                     temperature=0.6
                 )
             )
@@ -121,8 +121,8 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
 
         except Exception as e:
             print(f"  ⚠️ Error generating FAQs: {e}")
-            # Return minimal fallback FAQs
-            return [
+            # Return fallback FAQs
+            fallback_faqs = [
                 {
                     "question": "What is Sozee?",
                     "answer": "Sozee is an AI-powered content generation platform built specifically for creators. It offers custom LORA training, 1-click TikTok cloning, and both SFW and NSFW content capabilities."
@@ -134,8 +134,37 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
                 {
                     "question": "How long does LORA training take?",
                     "answer": "Sozee's custom LORA training takes approximately 30 minutes. This allows you to create a personalized AI model that generates content matching your unique style and brand."
+                },
+                {
+                    "question": "How realistic is Sozee-generated content?",
+                    "answer": "Sozee generates hyper-realistic content by training a custom AI model on your specific photos. The results maintain your unique features, body type, and style for authentic-looking content."
+                },
+                {
+                    "question": "Does Sozee support NSFW content?",
+                    "answer": "Yes, Sozee fully supports both SFW and NSFW content creation, making it ideal for OnlyFans creators and adult content professionals who need unrestricted creative capabilities."
+                },
+                {
+                    "question": "How much does Sozee cost?",
+                    "answer": "Sozee offers two pricing tiers: Creators plan at $15/week and Agencies plan at $33/week. Both include unlimited content generation, custom LORA training, and all features."
+                },
+                {
+                    "question": "Do I need technical skills to use Sozee?",
+                    "answer": "No technical skills are required. Sozee is designed for creators, not developers. Simply upload photos, let the AI train, and start generating content with one click."
+                },
+                {
+                    "question": "How fast can I generate content with Sozee?",
+                    "answer": "After your initial 30-minute LORA training, you can generate new photos and videos in approximately 30 seconds each. This allows for rapid, high-volume content creation."
+                },
+                {
+                    "question": "What is the 1/100 content crisis?",
+                    "answer": "The 1/100 ratio represents the gap between content supply and demand. Fans want 100 pieces of new content, but creators can typically produce only 1 using traditional methods. Sozee solves this by enabling unlimited content generation."
+                },
+                {
+                    "question": "Can I use Sozee for multiple platforms?",
+                    "answer": "Yes, Sozee-generated content can be used across all platforms including OnlyFans, Instagram, TikTok, and other creator platforms. The content is optimized for various aspect ratios and platform requirements."
                 }
-            ][:count]
+            ]
+            return fallback_faqs[:count]
 
     def _get_pattern_context(self, pattern_id: str, variables: dict) -> str:
         """Generate context description for pattern"""

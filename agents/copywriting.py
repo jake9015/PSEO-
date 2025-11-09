@@ -62,12 +62,16 @@ class CopywritingAgent(BaseAgent):
         # Load pattern configuration
         pattern_config = self._load_pattern_config(blueprint.get('pattern_id'))
         variables = blueprint.get('pseo_variables', {})
+        pattern_id = str(blueprint.get('pattern_id'))
 
         # Build H1 from formula
         h1 = self._build_h1(pattern_config, variables)
 
         # Get pattern-specific context
-        pattern_angle = self._get_pattern_angle(blueprint.get('pattern_id'), variables)
+        pattern_angle = self._get_pattern_angle(pattern_id, variables)
+
+        # Generate pattern-specific sections
+        pattern_sections = self._generate_pattern_sections(pattern_id, variables, research_data, h1, pattern_config)
 
         # Select viral hook
         import random
@@ -154,7 +158,11 @@ Return ONLY valid JSON."""
             )
 
             content = json.loads(response.text)
-            print(f"  ✓ Content generation complete")
+
+            # Add pattern-specific sections
+            content['pattern_sections'] = pattern_sections
+
+            print(f"  ✓ Content generation complete ({len(pattern_sections)} pattern-specific sections)")
             return content
 
         except Exception as e:
@@ -173,6 +181,138 @@ Return ONLY valid JSON."""
                 "comparison_table": [],
                 "final_cta": "Ready to transform your content? Start your free trial today."
             }
+
+    def _generate_pattern_sections(self, pattern_id: str, variables: dict, research_data: dict, h1: str, pattern_config: dict) -> dict:
+        """Generate pattern-specific sections based on section_templates.json"""
+
+        # Load section templates
+        section_templates = self._load_section_templates()
+        pattern_sections_config = section_templates.get('patterns', {}).get(pattern_id, {})
+
+        if not pattern_sections_config:
+            print(f"  ⚠️ No section templates found for pattern {pattern_id}")
+            return {}
+
+        sections_config = pattern_sections_config.get('sections', [])
+        generated_sections = {}
+
+        # Generate each pattern-specific section (excluding hero, faq, final_cta which are handled elsewhere)
+        for section_config in sections_config:
+            section_id = section_config.get('id')
+
+            # Skip sections handled by other agents or already generated
+            if section_id in ['hero', 'faq', 'final_cta']:
+                continue
+
+            # Skip sections without generation prompts (they're handled by other agents)
+            if 'generation_prompt' not in section_config:
+                continue
+
+            # Generate section content
+            section_content = self._generate_section_content(
+                section_config,
+                variables,
+                research_data,
+                pattern_config
+            )
+
+            if section_content:
+                generated_sections[section_id] = section_content
+
+        print(f"  ✓ Generated {len(generated_sections)} pattern-specific sections")
+        return generated_sections
+
+    def _generate_section_content(self, section_config: dict, variables: dict, research_data: dict, pattern_config: dict) -> dict:
+        """Generate content for a specific section"""
+
+        section_id = section_config.get('id')
+        section_name = section_config.get('name')
+        generation_prompt = section_config.get('generation_prompt', '')
+        content_requirements = section_config.get('content_requirements', {})
+        components = section_config.get('components', [])
+
+        # Replace variables in prompts
+        generation_prompt = self._replace_variables(generation_prompt, variables)
+
+        # Build prompt for AI
+        prompt = f"""You are an expert copywriter for Sozee.ai creating a specific landing page section.
+
+**SECTION: {section_name}** (ID: {section_id})
+
+**TASK:**
+{generation_prompt}
+
+**SECTION REQUIREMENTS:**
+{json.dumps(content_requirements, indent=2)}
+
+**COMPONENTS TO GENERATE:**
+{', '.join(components)}
+
+**VARIABLES:**
+{self._format_variables(variables)}
+
+**RESEARCH DATA:**
+{self._format_research_data(research_data)}
+
+**SOZEE KEY FACTS:**
+- Custom LORA Training in 30 minutes (hyper-realistic, trained on YOUR face)
+- 1-Click TikTok Cloning (replicate viral content instantly)
+- Built specifically for OnlyFans/creator platforms
+- SFW & NSFW capabilities (complete flexibility)
+- Solves the "1/100 content crisis" (1 photoshoot → 10,000+ photos)
+- No technical skills required
+- Pricing: Creators $15/week, Agencies $33/week
+
+**OUTPUT FORMAT (JSON):**
+{{
+  "heading": "Section heading (8-12 words, benefit-focused)",
+  "subheading": "Optional subheading or intro (2-3 sentences)" | null,
+  "content": [
+    {{
+      "item_heading": "Heading for this item" | null,
+      "item_body": "Body content for this item (markdown supported)",
+      "icon_suggestion": "icon name" | null
+    }}
+  ],
+  "visual_style": "{content_requirements.get('visual_style', 'default')}",
+  "cta_text": "Optional CTA text" | null
+}}
+
+Return ONLY valid JSON matching this structure."""
+
+        try:
+            response = self.genai_model.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    max_output_tokens=2000,
+                    temperature=0.8
+                )
+            )
+
+            section_content = json.loads(response.text)
+            return section_content
+
+        except Exception as e:
+            print(f"  ⚠️ Error generating section {section_id}: {e}")
+            return {}
+
+    def _load_section_templates(self) -> dict:
+        """Load section templates from section_templates.json"""
+        template_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'section_templates.json')
+        try:
+            with open(template_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"  ⚠️ Could not load section templates: {e}")
+        return {}
+
+    def _replace_variables(self, text: str, variables: dict) -> str:
+        """Replace {variable} placeholders in text"""
+        for var_name, var_value in variables.items():
+            text = text.replace(f"{{{var_name}}}", var_value)
+            # Also try capitalized version
+            text = text.replace(f"{{{var_name.capitalize()}}}", var_value)
+        return text
 
     def _load_pattern_config(self, pattern_id: str) -> dict:
         """Load pattern configuration from patterns.json"""
