@@ -1,0 +1,933 @@
+{
+  "system_context": "Pattern-specific landing page section templates. Each pattern has 8-11 sections with specific content requirements.",
+
+  "patterns": {
+    "1": {
+      "pattern_name": "Competitor Comparison",
+      "total_sections": 9,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta", "secondary_cta", "trust_badge"],
+          "content_requirements": {
+            "eyebrow": "Head-to-Head Comparison",
+            "subtitle": "Teaser on key differentiator (30-40 words)",
+            "visual_style": "hero_split"
+          }
+        },
+        {
+          "id": "quick_comparison_overview",
+          "order": 2,
+          "name": "Quick Comparison Overview",
+          "static": false,
+          "components": ["heading", "comparison_stats"],
+          "content_requirements": {
+            "heading": "Quick comparison headline",
+            "stats": "3-column quick stats: Sozee | Feature | Competitor",
+            "visual_style": "three_column_table",
+            "icon_suggestion": "checkmark_x"
+          },
+          "generation_prompt": "Create a quick visual comparison showing 3-4 key stats where Sozee wins: LORA training time, NSFW support, pricing, ease of use. Format: Feature name | Sozee value | Competitor value"
+        },
+        {
+          "id": "why_switching",
+          "order": 3,
+          "name": "Why Audience Are Switching",
+          "static": false,
+          "components": ["heading", "subheading", "benefit_cards"],
+          "content_requirements": {
+            "heading": "Why {audience} Choose Sozee Over {competitor}",
+            "subheading": "Optional 1-2 sentence context",
+            "benefit_cards": "3-4 benefit cards with icons",
+            "card_structure": "Problem with competitor → Sozee solution",
+            "visual_style": "icon_cards_grid",
+            "icon_suggestion": "swap_horizontal"
+          },
+          "generation_prompt": "Create 3-4 benefit cards explaining why {audience} are switching from {competitor} to Sozee. Each card should: 1) Identify a specific problem with {competitor}, 2) Show how Sozee solves it better. Use competitor research data."
+        },
+        {
+          "id": "detailed_comparison_table",
+          "order": 4,
+          "name": "Detailed Feature Comparison Table",
+          "static": false,
+          "components": ["heading", "comparison_table"],
+          "content_requirements": {
+            "heading": "Feature-by-Feature Comparison",
+            "table_rows": "8-10 features",
+            "visual_style": "detailed_comparison_table",
+            "highlight": "Sozee advantage column"
+          },
+          "generation_prompt": "Use Comparison Table Agent output. Ensure 8-10 features covering: LORA training, NSFW support, speed, ease of use, pricing, platform optimization, content quality, support, customization, and integration capabilities."
+        },
+        {
+          "id": "use_case_deep_dive",
+          "order": 5,
+          "name": "Use Case Deep Dive",
+          "static": false,
+          "components": ["heading", "use_cases"],
+          "content_requirements": {
+            "heading": "Built Specifically for {audience}",
+            "subheading": "How {audience} use Sozee to outperform {competitor}",
+            "use_cases": "2-3 specific scenarios where Sozee wins",
+            "case_structure": "Scenario → Challenge → Sozee Solution → Outcome",
+            "visual_style": "scenario_cards"
+          },
+          "generation_prompt": "Create 2-3 detailed use case scenarios showing how {audience} use Sozee instead of {competitor}. Each scenario should tell a mini-story: the situation, what {competitor} couldn't do, how Sozee solved it, and the result. Use audience insight data."
+        },
+        {
+          "id": "problem_with_competitor",
+          "order": 6,
+          "name": "Problems with Competitor",
+          "static": false,
+          "components": ["heading", "pain_points"],
+          "content_requirements": {
+            "heading": "What {competitor} Gets Wrong for {audience}",
+            "subheading": "Empathetic but factual",
+            "pain_points": "3-4 specific limitations",
+            "point_structure": "Problem headline + 2-3 sentence explanation",
+            "visual_style": "problem_cards",
+            "icon_suggestion": "alert_circle"
+          },
+          "generation_prompt": "Identify 3-4 specific problems {audience} face when using {competitor}. Be factual and empathetic (not attacking). Use competitor research data to ground each point. Examples: No NSFW support, complex interface, slow training times, poor creator workflows."
+        },
+        {
+          "id": "social_proof",
+          "order": 7,
+          "name": "Social Proof",
+          "static": true,
+          "components": ["heading", "testimonials", "stats"],
+          "content_requirements": {
+            "heading": "Join {audience} Who Switched",
+            "testimonials": "2-3 testimonials from switchers",
+            "stats": "Usage statistics",
+            "visual_style": "testimonial_cards"
+          },
+          "generation_prompt": "Use statistics from Statistics Agent. Focus on testimonials from users who switched from {competitor} to Sozee. Include specific metrics: time saved, content volume increase, revenue impact."
+        },
+        {
+          "id": "faq",
+          "order": 8,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Frequently Asked Questions",
+            "qa_count": 10,
+            "qa_types": [
+              "How is Sozee different from {competitor}?",
+              "Can I migrate from {competitor} easily?",
+              "Is Sozee easier to use?",
+              "What features does Sozee have that {competitor} doesn't?",
+              "Which is better for {platform} creators?",
+              "How long does migration take?",
+              "Will I lose my existing content?",
+              "What's the pricing difference?",
+              "Do I need technical skills?",
+              "What's included in the free trial?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 9,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons", "guarantees"],
+          "content_requirements": {
+            "heading": "Risk-free urgency headline",
+            "body": "Reinforcement copy (2-3 sentences)",
+            "cta_primary": "Try Sozee Free",
+            "cta_secondary": "Compare Features",
+            "guarantees": "Free trial + migration support",
+            "visual_style": "cta_block"
+          },
+          "generation_prompt": "Create final CTA emphasizing risk-free trial and easy migration from {competitor}. Include specific guarantees: no credit card required, migration support, 1-click switch."
+        }
+      ]
+    },
+
+    "2": {
+      "pattern_name": "Best Tool",
+      "total_sections": 9,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta", "secondary_cta"],
+          "content_requirements": {
+            "eyebrow": "#1 Ranked by {audience}",
+            "subtitle": "Why it's #1 (ranking criteria)",
+            "visual_style": "hero_centered"
+          }
+        },
+        {
+          "id": "authority_badges",
+          "order": 2,
+          "name": "Authority Badges",
+          "static": false,
+          "components": ["badges", "stats"],
+          "content_requirements": {
+            "heading": "Recognized by {audience} Worldwide",
+            "badges": "Top-rated badges, usage stats, awards",
+            "visual_style": "badge_grid",
+            "icon_suggestion": "award"
+          },
+          "generation_prompt": "Create authority indicators showing why Sozee ranks #1. Include: 'Top-rated by {audience}', usage statistics from Statistics Agent, recognition indicators. Format as visual badges."
+        },
+        {
+          "id": "why_rank_1",
+          "order": 3,
+          "name": "Why Sozee Ranks #1",
+          "static": false,
+          "components": ["heading", "advantages"],
+          "content_requirements": {
+            "heading": "What Makes Sozee the Best {use_case}",
+            "advantages": "5-6 competitive advantages",
+            "advantage_structure": "Heading + 2-3 sentences + icon",
+            "visual_style": "numbered_cards",
+            "icon_suggestion": "star"
+          },
+          "generation_prompt": "List 5-6 specific reasons Sozee ranks as the best {use_case} for {audience}. Each should be a clear competitive advantage with evidence. Examples: Fastest LORA training (30 min), NSFW support, creator-specific features, easiest interface, best results, most integrations."
+        },
+        {
+          "id": "feature_showcase",
+          "order": 4,
+          "name": "Feature Showcase",
+          "static": false,
+          "components": ["heading", "features"],
+          "content_requirements": {
+            "heading": "Features That Put Us Ahead",
+            "features": "4-6 standout features",
+            "feature_structure": "Feature name → Benefit → How it helps {audience}",
+            "visual_style": "feature_cards_2col",
+            "icon_suggestion": "lightning"
+          },
+          "generation_prompt": "Showcase 4-6 features that make Sozee #1. Each feature should include: name, benefit statement, and specific way it helps {audience}. Focus on differentiators: Custom LORA, 1-Click TikTok Cloning, NSFW Support, Speed, Creator Workflows."
+        },
+        {
+          "id": "comparison_to_alternatives",
+          "order": 5,
+          "name": "Comparison to Alternatives",
+          "static": false,
+          "components": ["heading", "comparison_table"],
+          "content_requirements": {
+            "heading": "How We Compare to Other Tools",
+            "table_structure": "Feature | Sozee | Others",
+            "rows": "6-8 features",
+            "visual_style": "comparison_table_generic",
+            "note": "Show advantages without naming specific competitors"
+          },
+          "generation_prompt": "Create a comparison table showing Sozee vs 'Other Tools' (generic). Highlight 6-8 features where Sozee excels: LORA training time, NSFW support, creator focus, ease of use, content quality, pricing, support, customization."
+        },
+        {
+          "id": "use_case_success_stories",
+          "order": 6,
+          "name": "Use Case Success Stories",
+          "static": false,
+          "components": ["heading", "case_studies"],
+          "content_requirements": {
+            "heading": "How {audience} Use Sozee",
+            "case_studies": "3 specific use case cards",
+            "case_structure": "Before scenario → After with Sozee → Results",
+            "visual_style": "before_after_cards"
+          },
+          "generation_prompt": "Create 3 use case success stories showing {audience} using Sozee for {use_case}. Each should show: what they struggled with before, how they use Sozee now, and specific results (time saved, content created, revenue growth)."
+        },
+        {
+          "id": "results_roi",
+          "order": 7,
+          "name": "Results & ROI",
+          "static": false,
+          "components": ["heading", "metrics"],
+          "content_requirements": {
+            "heading": "Results {audience} Get with Sozee",
+            "metrics": "Time saved, content volume, revenue impact",
+            "visual_style": "stat_callouts",
+            "icon_suggestion": "trending_up"
+          },
+          "generation_prompt": "Present results and ROI data from Statistics Agent. Show concrete outcomes: average time saved per week, content output increase (1 shoot → 10,000 photos), revenue impact, creator retention. Use specific numbers."
+        },
+        {
+          "id": "faq",
+          "order": 8,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Frequently Asked Questions",
+            "qa_count": 10,
+            "qa_types": [
+              "What makes Sozee the best {use_case} for {audience}?",
+              "How does Sozee compare to other tools?",
+              "Why should {audience} choose Sozee?",
+              "Is Sozee really better than competitors?",
+              "What do {audience} say about Sozee?",
+              "How much does Sozee cost?",
+              "Is there a free trial?",
+              "What results can I expect?",
+              "Do I need technical skills?",
+              "What's included in the pricing?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 9,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons"],
+          "content_requirements": {
+            "heading": "Join the Top {audience}",
+            "body": "Emphasize trial and #1 ranking",
+            "cta_primary": "Start Free Trial",
+            "visual_style": "cta_block"
+          },
+          "generation_prompt": "Final CTA emphasizing joining the best-ranked tool for {use_case}. Highlight free trial, no credit card required, join top {audience}."
+        }
+      ]
+    },
+
+    "3": {
+      "pattern_name": "Direct Tool",
+      "total_sections": 9,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta"],
+          "content_requirements": {
+            "eyebrow": "Built for {platform}",
+            "subtitle": "One-liner on what it does",
+            "visual_style": "hero_simple"
+          }
+        },
+        {
+          "id": "platform_benefits",
+          "order": 2,
+          "name": "Platform-Specific Benefits",
+          "static": false,
+          "components": ["heading", "benefits"],
+          "content_requirements": {
+            "heading": "Perfect for {platform} {audience}",
+            "benefits": "4 benefits specific to platform",
+            "visual_style": "benefit_cards",
+            "platform_branding": "Include {platform} logo/colors"
+          },
+          "generation_prompt": "List 4 benefits specific to {platform}. Examples for OnlyFans: optimized aspect ratios, NSFW capabilities, fan engagement features, subscription content volume. Each benefit should directly relate to {platform}'s unique requirements."
+        },
+        {
+          "id": "how_it_works",
+          "order": 3,
+          "name": "How It Works",
+          "static": false,
+          "components": ["heading", "steps"],
+          "content_requirements": {
+            "heading": "From Idea to {platform} Content in Minutes",
+            "steps": "3-4 step visual process",
+            "step_flow": "Upload → Train → Generate → Post to {platform}",
+            "visual_style": "step_flow",
+            "icon_suggestion": "arrow_right"
+          },
+          "generation_prompt": "Create a 3-4 step process showing how to create {platform} content with Sozee. Steps: 1) Upload photos (10-20), 2) AI trains LORA model (30 min), 3) Generate unlimited content (30 sec/photo), 4) Post to {platform}. Include time estimates."
+        },
+        {
+          "id": "key_features",
+          "order": 4,
+          "name": "Key Features",
+          "static": false,
+          "components": ["heading", "features"],
+          "content_requirements": {
+            "heading": "{tool_type} Features Built for {platform}",
+            "features": "5-6 features relevant to platform",
+            "feature_structure": "Technical feature + benefit for {audience}",
+            "visual_style": "feature_list_icons"
+          },
+          "generation_prompt": "List 5-6 features optimized for {platform}. Each should include the technical capability and the {platform}-specific benefit. Examples: Custom LORA training → content that looks exactly like you for {platform} subscribers, NSFW support → unrestricted {platform} content."
+        },
+        {
+          "id": "speed_scale",
+          "order": 5,
+          "name": "Speed & Scale",
+          "static": false,
+          "components": ["heading", "stats", "comparison"],
+          "content_requirements": {
+            "heading": "Generate {platform} Content 100x Faster",
+            "stats": "Speed, volume, efficiency metrics",
+            "comparison": "Before/after comparison",
+            "visual_style": "stat_comparison"
+          },
+          "generation_prompt": "Show speed and scale advantages using Statistics Agent data. Compare traditional content creation (1 photoshoot = 50 photos) vs Sozee (1 photoshoot = 10,000+ photos). Include time metrics: traditional shoot (4-8 hours) vs Sozee generation (30 sec/photo)."
+        },
+        {
+          "id": "platform_integration",
+          "order": 6,
+          "name": "Platform Integration",
+          "static": false,
+          "components": ["heading", "integration_details"],
+          "content_requirements": {
+            "heading": "Seamless {platform} Workflow",
+            "details": "How it fits into existing process, export formats, compatibility",
+            "visual_style": "workflow_diagram"
+          },
+          "generation_prompt": "Explain how Sozee integrates into {platform} workflows. Include: export formats optimized for {platform}, file specifications, posting workflow, content organization. Show it fits seamlessly into their existing process."
+        },
+        {
+          "id": "use_cases",
+          "order": 7,
+          "name": "Use Cases",
+          "static": false,
+          "components": ["heading", "examples"],
+          "content_requirements": {
+            "heading": "What You Can Create for {platform}",
+            "examples": "6-8 content type examples",
+            "visual_style": "grid_gallery",
+            "include_visuals": true
+          },
+          "generation_prompt": "List 6-8 types of content {audience} can create for {platform} using Sozee. Examples: profile photos, subscription content, custom requests, themed sets, seasonal content, promotional materials. Each should be {platform}-relevant."
+        },
+        {
+          "id": "faq",
+          "order": 8,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Frequently Asked Questions",
+            "qa_count": 10,
+            "qa_types": [
+              "How does the {tool_type} work?",
+              "Is it optimized for {platform}?",
+              "What formats does it support?",
+              "How realistic will my {platform} content look?",
+              "How fast can I generate content?",
+              "Can I create NSFW content for {platform}?",
+              "What's included in the free trial?",
+              "Do I need technical skills?",
+              "How much does it cost?",
+              "Can I use this for {platform} subscriptions?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 9,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons"],
+          "content_requirements": {
+            "heading": "Start Creating for {platform}",
+            "cta_primary": "Get Started Free",
+            "visual_style": "cta_block"
+          },
+          "generation_prompt": "Final CTA focused on starting to create {platform} content. Emphasize free trial, platform optimization, immediate results."
+        }
+      ]
+    },
+
+    "4": {
+      "pattern_name": "Alternative",
+      "total_sections": 9,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta"],
+          "content_requirements": {
+            "eyebrow": "Better Alternative to {competitor}",
+            "subtitle": "What {competitor} is missing",
+            "visual_style": "hero_split"
+          }
+        },
+        {
+          "id": "why_switch",
+          "order": 2,
+          "name": "Why Switch",
+          "static": false,
+          "components": ["heading", "pain_points"],
+          "content_requirements": {
+            "heading": "Why {audience} Are Leaving {competitor}",
+            "pain_points": "4 specific problems with {competitor}",
+            "tone": "Empathetic but clear",
+            "visual_style": "problem_cards",
+            "icon_suggestion": "x_circle"
+          },
+          "generation_prompt": "Identify 4 specific pain points {audience} experience with {competitor} using competitor research data. Be empathetic and factual. Examples: No NSFW support limits {platform} creators, 3-hour LORA training kills productivity, Complex interface requires technical skills, Limited customization for creator workflows."
+        },
+        {
+          "id": "what_sozee_does_differently",
+          "order": 3,
+          "name": "What Sozee Does Differently",
+          "static": false,
+          "components": ["heading", "solutions"],
+          "content_requirements": {
+            "heading": "How Sozee Solves What {competitor} Can't",
+            "solutions": "4-5 key differences",
+            "solution_structure": "Problem with {competitor} → Sozee solution",
+            "visual_style": "side_by_side_comparison",
+            "icon_suggestion": "check_circle"
+          },
+          "generation_prompt": "For each pain point with {competitor}, show how Sozee solves it. Format: {competitor} problem → Sozee solution. Use specific features and benefits. Example: {competitor} blocks NSFW → Sozee offers full NSFW support built for creators."
+        },
+        {
+          "id": "feature_comparison_table",
+          "order": 4,
+          "name": "Feature Comparison Table",
+          "static": false,
+          "components": ["heading", "comparison_table"],
+          "content_requirements": {
+            "heading": "{competitor} vs Sozee: Feature Comparison",
+            "focus": "Missing features in {competitor}",
+            "visual_style": "detailed_comparison_table"
+          },
+          "generation_prompt": "Use Comparison Table Agent output. Focus on features {competitor} lacks that Sozee has. Highlight gaps in {competitor} offering."
+        },
+        {
+          "id": "easy_migration",
+          "order": 5,
+          "name": "Easy Migration",
+          "static": false,
+          "components": ["heading", "migration_steps", "reassurance"],
+          "content_requirements": {
+            "heading": "Switching from {competitor} is Easy",
+            "steps": "3 steps to migrate",
+            "reassurance": "No content loss, time estimate",
+            "visual_style": "step_cards",
+            "icon_suggestion": "refresh"
+          },
+          "generation_prompt": "Create 3-step migration guide from {competitor} to Sozee. Include: 1) Sign up and upload photos (10 min), 2) Train your LORA model (30 min automatic), 3) Start generating (instant). Emphasize: no data loss, quick process, migration support available."
+        },
+        {
+          "id": "pricing_comparison",
+          "order": 6,
+          "name": "Pricing Comparison",
+          "static": false,
+          "components": ["heading", "pricing_table"],
+          "content_requirements": {
+            "heading": "Better Features, Better Price",
+            "comparison": "Sozee vs {competitor} pricing",
+            "visual_style": "pricing_comparison"
+          },
+          "generation_prompt": "Compare Sozee pricing to {competitor} if competitor pricing is known. Sozee: Creators $15/week, Agencies $33/week. Show value proposition: better features at competitive/lower price. If competitor pricing unknown, emphasize Sozee's transparent, affordable pricing."
+        },
+        {
+          "id": "what_you_gain",
+          "order": 7,
+          "name": "What You'll Gain",
+          "static": false,
+          "components": ["heading", "outcome_cards"],
+          "content_requirements": {
+            "heading": "What {audience} Get by Switching",
+            "outcomes": "3-4 outcome cards",
+            "outcome_types": "Time savings, cost savings, capability gains",
+            "visual_style": "outcome_cards",
+            "icon_suggestion": "gift"
+          },
+          "generation_prompt": "Show 3-4 concrete outcomes from switching to Sozee. Use Statistics Agent data. Examples: Save 20 hours/week on content creation, Generate 100x more content from same photoshoot, Access NSFW capabilities, Reduce technical complexity. Include specific metrics."
+        },
+        {
+          "id": "faq",
+          "order": 8,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Switching from {competitor}? Your Questions Answered",
+            "qa_count": 10,
+            "qa_types": [
+              "Why should I switch from {competitor} to Sozee?",
+              "How easy is migration from {competitor}?",
+              "Will I lose my existing work when switching?",
+              "How long does migration take?",
+              "What makes Sozee better than {competitor}?",
+              "Can Sozee do everything {competitor} does?",
+              "How much will I save by switching?",
+              "Is there migration support?",
+              "Can I try Sozee before switching fully?",
+              "What do other {competitor} users say?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 9,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons", "guarantees"],
+          "content_requirements": {
+            "heading": "Make the Switch Today",
+            "guarantees": "Risk-free trial + migration support",
+            "cta_primary": "Switch to Sozee",
+            "visual_style": "cta_block"
+          },
+          "generation_prompt": "Final CTA emphasizing easy, risk-free switch from {competitor}. Include guarantees: free trial, migration support, no commitment. Reinforce key advantages over {competitor}."
+        }
+      ]
+    },
+
+    "5": {
+      "pattern_name": "Review",
+      "total_sections": 11,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta"],
+          "content_requirements": {
+            "eyebrow": "Honest Review",
+            "subtitle": "Unbiased analysis for {audience}",
+            "visual_style": "hero_centered"
+          }
+        },
+        {
+          "id": "quick_verdict",
+          "order": 2,
+          "name": "Quick Verdict",
+          "static": false,
+          "components": ["rating", "best_for", "not_ideal_for", "bottom_line"],
+          "content_requirements": {
+            "rating": "Star rating (4.8/5 typical)",
+            "best_for": "Specific use cases where Sozee excels",
+            "not_ideal_for": "Honest limitations",
+            "bottom_line": "2-3 sentence summary",
+            "visual_style": "verdict_card",
+            "icon_suggestion": "star"
+          },
+          "generation_prompt": "Create honest quick verdict. Rating: 4.7-4.9/5. Best for: {audience} who need high-volume, realistic content for {platform}. Not ideal for: users needing generic stock photos or without consistent personal brand. Bottom line: summarize when Sozee is the right choice."
+        },
+        {
+          "id": "pros",
+          "order": 3,
+          "name": "Pros Section",
+          "static": false,
+          "components": ["heading", "pros_list"],
+          "content_requirements": {
+            "heading": "What We Love About Sozee",
+            "pros": "5-7 genuine strengths with explanations",
+            "visual_style": "pros_list",
+            "icon_suggestion": "check_circle"
+          },
+          "generation_prompt": "List 5-7 genuine pros of Sozee. Examples: Fastest LORA training (30 min vs competitors' 3+ hours), Full NSFW support for creators, Hyper-realistic results, 1-Click TikTok cloning, No technical skills required, Built specifically for creators, Transparent pricing. Each needs 1-2 sentence explanation."
+        },
+        {
+          "id": "cons",
+          "order": 4,
+          "name": "Cons Section",
+          "static": false,
+          "components": ["heading", "cons_list"],
+          "content_requirements": {
+            "heading": "Areas for Improvement",
+            "cons": "2-3 honest limitations",
+            "tone": "Balanced, not harsh",
+            "visual_style": "cons_list",
+            "icon_suggestion": "alert_circle"
+          },
+          "generation_prompt": "List 2-3 honest limitations to show balanced review. Examples: Requires initial 30-min LORA training (not instant), Best results need 15-20 training photos (quality over quantity), Focused on creator content (not ideal for generic stock photos). This builds trust by being honest."
+        },
+        {
+          "id": "feature_breakdown",
+          "order": 5,
+          "name": "Feature Breakdown",
+          "static": false,
+          "components": ["heading", "feature_ratings"],
+          "content_requirements": {
+            "heading": "Features Reviewed",
+            "features": "6-8 features rated",
+            "rating_structure": "Feature | Rating (1-5) | Our Take",
+            "visual_style": "feature_rating_table"
+          },
+          "generation_prompt": "Rate 6-8 key features. Examples: LORA Training (5/5 - fastest in class), Content Quality (4.8/5 - hyper-realistic), Ease of Use (4.9/5 - no tech skills needed), NSFW Support (5/5 - unrestricted), Speed (4.7/5 - 30 sec per image), Platform Integration (4.5/5 - optimized for creators), Pricing (4.8/5 - transparent and affordable), Support (4.6/5 - responsive team)."
+        },
+        {
+          "id": "who_its_perfect_for",
+          "order": 6,
+          "name": "Who It's Perfect For",
+          "static": false,
+          "components": ["heading", "personas"],
+          "content_requirements": {
+            "heading": "Best Fit for These {audience} Types",
+            "personas": "3-4 specific personas",
+            "persona_structure": "Type of {audience} → Why Sozee works for them",
+            "visual_style": "persona_cards"
+          },
+          "generation_prompt": "Define 3-4 specific {audience} personas who benefit most from Sozee. Examples: High-volume OnlyFans creators needing daily content, Agencies managing multiple creator accounts, Models with limited photoshoot availability, Creators in restrictive NSFW categories. Explain why each persona benefits."
+        },
+        {
+          "id": "who_should_look_elsewhere",
+          "order": 7,
+          "name": "Who Should Look Elsewhere",
+          "static": false,
+          "components": ["heading", "limitations"],
+          "content_requirements": {
+            "heading": "When Sozee Might Not Be Right",
+            "limitations": "2-3 scenarios where other tools might be better",
+            "tone": "Honest, builds trust",
+            "visual_style": "limitation_cards"
+          },
+          "generation_prompt": "Honestly identify 2-3 scenarios where Sozee might not be the best fit. Examples: If you need generic stock photos (not personalized content), If you're creating corporate/business headshots, If you need instant results without any training time. This honesty builds trust in the review."
+        },
+        {
+          "id": "pricing_analysis",
+          "order": 8,
+          "name": "Pricing Analysis",
+          "static": false,
+          "components": ["heading", "pricing_breakdown", "roi_analysis"],
+          "content_requirements": {
+            "heading": "Value for Money",
+            "pricing": "Creators $15/week, Agencies $33/week",
+            "roi_analysis": "Cost vs content output comparison",
+            "visual_style": "pricing_breakdown"
+          },
+          "generation_prompt": "Analyze Sozee pricing and ROI. Pricing: Creators $15/week (~$60/month), Agencies $33/week (~$132/month). Compare to traditional photoshoot costs ($500-2000/shoot) and content output (1 shoot = 50 photos traditional vs 10,000+ photos with Sozee). Show clear ROI for {audience}."
+        },
+        {
+          "id": "final_verdict",
+          "order": 9,
+          "name": "Final Verdict",
+          "static": false,
+          "components": ["heading", "recommendation"],
+          "content_requirements": {
+            "heading": "Our Recommendation",
+            "recommendation": "Clear recommendation with conditions",
+            "try_it_if": "Specific scenarios to try Sozee",
+            "visual_style": "verdict_card"
+          },
+          "generation_prompt": "Provide final verdict with clear recommendation. Format: 'We recommend Sozee for {audience} who [conditions]'. Try it if: you need high-volume personalized content, you want to scale without burnout, you create NSFW content for {platform}, you manage multiple creators. Include 'Try the free trial to see if it fits your workflow.'"
+        },
+        {
+          "id": "faq",
+          "order": 10,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Your Questions About Sozee Answered",
+            "qa_count": 10,
+            "qa_types": [
+              "Is Sozee worth it for {audience}?",
+              "What are Sozee's main pros and cons?",
+              "How much does Sozee cost?",
+              "What do real {audience} say about Sozee?",
+              "Who should NOT use Sozee?",
+              "How does Sozee compare to competitors?",
+              "Is there a free trial?",
+              "What's the learning curve?",
+              "How realistic is the content?",
+              "What's the ROI for {audience}?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 11,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons"],
+          "content_requirements": {
+            "heading": "Try It Yourself",
+            "body": "Emphasize free trial to test the review claims",
+            "cta_primary": "Start Free Trial",
+            "visual_style": "cta_block"
+          },
+          "generation_prompt": "Final CTA encouraging users to verify review with free trial. Emphasize: test everything in the review yourself, no credit card required, see if it fits your {audience} needs."
+        }
+      ]
+    },
+
+    "6": {
+      "pattern_name": "Content Crisis",
+      "total_sections": 11,
+      "sections": [
+        {
+          "id": "hero",
+          "order": 1,
+          "name": "Hero Section",
+          "static": false,
+          "components": ["eyebrow", "h1", "subtitle", "primary_cta"],
+          "content_requirements": {
+            "eyebrow": "The Content Crisis Solution",
+            "subtitle": "The 1/100 supply/demand problem, solved",
+            "visual_style": "hero_urgent"
+          }
+        },
+        {
+          "id": "crisis_statistics",
+          "order": 2,
+          "name": "The Problem (Statistics)",
+          "static": false,
+          "components": ["heading", "statistics"],
+          "content_requirements": {
+            "heading": "The Crisis Is Real",
+            "statistics": "4-6 statistics about content burnout",
+            "visual_style": "stat_callouts_urgent",
+            "icon_suggestion": "alert_triangle"
+          },
+          "generation_prompt": "Present 4-6 compelling statistics from Statistics Agent about the content crisis. Examples: 78% of creators report burnout, Average creator posts 1 photo/day but fans want 100+, $500-2000 per photoshoot limits content volume, Creators spend 60% of time creating vs engaging fans, Content demand grows 10x faster than creator capacity. Use urgent visual style."
+        },
+        {
+          "id": "1_to_100_reality",
+          "order": 3,
+          "name": "The 1/100 Reality",
+          "static": false,
+          "components": ["heading", "visualization"],
+          "content_requirements": {
+            "heading": "Your Fans Want 100 Posts. You Can Create 1.",
+            "visualization": "Visual supply/demand gap",
+            "data": "Industry data on content supply vs demand",
+            "visual_style": "supply_demand_chart",
+            "icon_suggestion": "trending_down"
+          },
+          "generation_prompt": "Visualize the 1/100 problem. Show: Fans want 100 pieces of new content, Creators can produce 1-2 pieces (traditional methods), Supply/demand gap = 98-99% unmet demand. Use Statistics Agent data on creator capacity vs fan expectations. Make the gap visually dramatic and urgent."
+        },
+        {
+          "id": "traditional_failures",
+          "order": 4,
+          "name": "Why Traditional Solutions Fail",
+          "static": false,
+          "components": ["heading", "failure_reasons"],
+          "content_requirements": {
+            "heading": "Why Photoshoots and Manual Creation Don't Scale",
+            "reasons": "3-4 reasons current approach is broken",
+            "reason_structure": "Problem → Why it doesn't scale → Impact",
+            "visual_style": "failure_cards",
+            "icon_suggestion": "x_circle"
+          },
+          "generation_prompt": "Identify 3-4 fundamental problems with traditional content creation. Examples: 1) Photoshoots ($500-2000 each) → unsustainable at scale → limits growth, 2) Time constraints (4-8 hours per shoot) → can't keep up with demand → burnout, 3) Physical/location limits → can't create 24/7 → missed revenue, 4) Quality pressure → perfectionism slows output → fan churn. Show why traditional methods can't solve the crisis."
+        },
+        {
+          "id": "sozee_solution",
+          "order": 5,
+          "name": "The Sozee Solution",
+          "static": false,
+          "components": ["heading", "solution_explanation"],
+          "content_requirements": {
+            "heading": "How Sozee Solves the Content Crisis",
+            "explanation": "Revolutionary approach to content supply",
+            "key_concept": "1 photoshoot → 10,000 photos concept",
+            "technology": "LORA training explanation (simple language)",
+            "visual_style": "solution_showcase"
+          },
+          "generation_prompt": "Explain how Sozee fundamentally solves the 1/100 problem. Key points: 1 photoshoot (15-20 photos) trains custom AI model in 30 minutes, Generate unlimited hyper-realistic content (30 sec per photo), Same face, body, style - infinite variations, Solve supply problem permanently. Use simple language to explain LORA training without technical jargon."
+        },
+        {
+          "id": "scale_without_burnout",
+          "order": 6,
+          "name": "Scale Without Burnout",
+          "static": false,
+          "components": ["heading", "benefits"],
+          "content_requirements": {
+            "heading": "Create Unlimited Content Without Burning Out",
+            "benefits": "4 ways Sozee changes the game",
+            "benefit_structure": "From [problem] → To [solution]",
+            "visual_style": "transformation_cards"
+          },
+          "generation_prompt": "Show 4 transformations Sozee enables. Examples: From 1 photoshoot/month → Unlimited daily content, From 8 hours per shoot → 30 seconds per image, From physical burnout → Creative freedom, From revenue ceiling → Unlimited growth potential. Use before/after format showing the dramatic shift."
+        },
+        {
+          "id": "real_impact",
+          "order": 7,
+          "name": "Real Impact",
+          "static": false,
+          "components": ["heading", "scenarios", "testimonials"],
+          "content_requirements": {
+            "heading": "From Crisis to Abundance",
+            "scenarios": "Before/after scenarios",
+            "typical_day": "Day in the life before vs after Sozee",
+            "testimonials": "Creator testimonials about solving burnout",
+            "visual_style": "before_after_stories"
+          },
+          "generation_prompt": "Create before/after stories showing real impact. Include: Typical day before (photoshoot planning, travel, shooting, editing = 12 hours for 50 photos), Typical day after (30 min LORA training once, then generate 200 photos in 1 hour anytime), Creator testimonials about eliminated burnout and increased revenue. Show emotional and practical impact."
+        },
+        {
+          "id": "how_it_works",
+          "order": 8,
+          "name": "How It Works",
+          "static": false,
+          "components": ["heading", "steps"],
+          "content_requirements": {
+            "heading": "Your Content Crisis Solution in 3 Steps",
+            "steps": "Simple 3-step process",
+            "step_details": "Upload photos → 30-min LORA training → Infinite generation",
+            "visual_style": "simple_steps"
+          },
+          "generation_prompt": "Simple 3-step process: 1) Upload 15-20 photos (one-time, 10 minutes), 2) AI trains your LORA model (30 minutes automatic), 3) Generate unlimited content (30 seconds per photo, forever). Emphasize: do step 1-2 once, then step 3 infinitely. This solves the crisis permanently."
+        },
+        {
+          "id": "roi_of_solving_crisis",
+          "order": 9,
+          "name": "ROI of Solving the Crisis",
+          "static": false,
+          "components": ["heading", "roi_metrics"],
+          "content_requirements": {
+            "heading": "What You Gain by Ending the Crisis",
+            "metrics": "Time back, revenue increase, mental health, growth potential",
+            "visual_style": "roi_breakdown",
+            "icon_suggestion": "trending_up"
+          },
+          "generation_prompt": "Calculate ROI of solving content crisis using Statistics Agent data. Show: Time saved (20+ hours/week freed up), Revenue increase (10x content = 3-5x revenue), Mental health (eliminate burnout, stress), Growth potential (unlimited content = unlimited scaling). Use specific numbers where possible."
+        },
+        {
+          "id": "faq",
+          "order": 10,
+          "name": "FAQ Section",
+          "static": false,
+          "components": ["heading", "qa_pairs"],
+          "content_requirements": {
+            "heading": "Content Crisis Questions Answered",
+            "qa_count": 10,
+            "qa_types": [
+              "What is the content crisis for {audience}?",
+              "How does Sozee solve the 1/100 problem?",
+              "Can I really generate unlimited content?",
+              "Will my fans notice if I use AI content?",
+              "What's the ROI for {audience}?",
+              "How long does LORA training take?",
+              "Do I need ongoing photoshoots?",
+              "Is this sustainable long-term?",
+              "What about content quality?",
+              "How much does it cost vs traditional methods?"
+            ],
+            "visual_style": "accordion"
+          },
+          "agent": "FAQ_Generator_Agent"
+        },
+        {
+          "id": "final_cta",
+          "order": 11,
+          "name": "Final CTA",
+          "static": false,
+          "components": ["heading", "body", "cta_buttons", "crisis_calculator"],
+          "content_requirements": {
+            "heading": "End Your Content Crisis Today",
+            "body": "Urgent CTA emphasizing permanent solution",
+            "cta_primary": "Solve My Crisis",
+            "cta_secondary": "Calculate My Crisis Cost",
+            "crisis_calculator": "Optional: tool to calculate their supply/demand gap",
+            "visual_style": "cta_urgent"
+          },
+          "generation_prompt": "Urgent final CTA emphasizing ending the content crisis permanently. Include: Start free trial and solve crisis in 30 minutes, No more burnout or content bottlenecks, Unlimited content = unlimited growth, Crisis calculator to show their personal gap. Use urgent but empowering language."
+        }
+      ]
+    }
+  }
+}
