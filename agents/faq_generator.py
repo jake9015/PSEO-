@@ -53,10 +53,13 @@ class FAQGeneratorAgent(BaseAgent):
         )
 
     def _generate_faqs(self, pattern_id: str, variables: dict, count: int) -> list:
-        """Generate pattern-specific FAQ pairs"""
+        """Generate pattern-specific FAQ pairs using templates"""
 
         # Get pattern context
         pattern_context = self._get_pattern_context(pattern_id, variables)
+
+        # Get pattern-specific question types
+        question_types = self._get_pattern_question_types(pattern_id, variables)
 
         prompt = f"""You are creating FAQ content for a Sozee landing page.
 
@@ -66,26 +69,28 @@ class FAQGeneratorAgent(BaseAgent):
 
 **Task**: Create {count} frequently asked questions and answers.
 
+**PATTERN-SPECIFIC QUESTION TYPES** (use these as templates):
+{question_types}
+
 **Requirements:**
-1. Questions must be natural language queries users would actually search
+1. Questions MUST be natural language queries users would actually search
 2. Include long-tail keywords in questions
 3. Answers should be 2-3 sentences, informative and helpful
-4. Address common objections and concerns
+4. Address common objections and concerns specific to this pattern
 5. Mention Sozee naturally where appropriate
-6. Questions should cover:
-   - Feature comparisons (if competitor mentioned)
-   - Pricing and trials
-   - Technical capabilities (NSFW, LORA training, etc.)
-   - Use case fit
-   - Getting started
+6. Be FACTUAL - don't hallucinate features or pricing
 
-**Sozee Key Features to Reference:**
-- 30-minute custom LORA training
-- 1-Click TikTok cloning
+**Sozee Key Facts to Reference:**
+- Custom LORA training: 30 minutes
+- Content generation: 30 seconds per photo/video
+- Hyper-realistic (trained on YOUR face/body)
 - SFW & NSFW content support
-- Built for OnlyFans creators
-- Free trial available
-- No credit card required
+- Built specifically for OnlyFans/creator platforms
+- Pricing: Creators $15/week, Agencies $33/week
+- Free trial available (no credit card required)
+- No technical skills required
+- 1-Click TikTok cloning
+- Solves the 1/100 content supply/demand crisis
 
 **Output as JSON array:**
 [
@@ -145,3 +150,57 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
         }
 
         return pattern_descriptions.get(pattern_id, "Sozee AI content generation platform")
+
+    def _get_pattern_question_types(self, pattern_id: str, variables: dict) -> str:
+        """Get pattern-specific FAQ question types from content templates"""
+
+        competitor = variables.get('competitor', '[competitor]')
+        audience = variables.get('audience', '[audience]')
+        use_case = variables.get('use_case', '[use case]')
+        platform = variables.get('platform', '[platform]')
+
+        question_types = {
+            '1': f"""COMPARISON QUESTIONS (focus on differences vs {competitor}):
+• How is Sozee different from {competitor}?
+• Is Sozee easier to use than {competitor}?
+• Can I switch from {competitor} to Sozee easily?
+• What features does Sozee have that {competitor} doesn't?
+• Which is better for {platform} creators - Sozee or {competitor}?""",
+
+            '2': f"""BEST TOOL QUESTIONS (focus on why it's #1):
+• What makes Sozee the best {use_case} for {audience}?
+• How does Sozee compare to other tools?
+• Why should {audience} choose Sozee?
+• Is Sozee really better than competitors for {use_case}?
+• What do {audience} say about Sozee?""",
+
+            '3': f"""DIRECT TOOL QUESTIONS (focus on how it works):
+• How does Sozee's {use_case} feature work?
+• Is Sozee optimized for {platform}?
+• How realistic will my Sozee-generated content look?
+• How fast can I generate content with Sozee?
+• What's included in the Sozee free trial?""",
+
+            '4': f"""ALTERNATIVE QUESTIONS (focus on switching):
+• Why should I switch from {competitor} to Sozee?
+• Is migrating from {competitor} to Sozee easy?
+• Will I lose my existing content if I switch from {competitor}?
+• How much will I save by switching to Sozee?
+• What makes Sozee better than {competitor} for {audience}?""",
+
+            '5': f"""REVIEW QUESTIONS (focus on evaluation):
+• Is Sozee worth it for {audience}?
+• What are Sozee's pros and cons?
+• How much does Sozee cost?
+• What do real {audience} say about Sozee?
+• Who should NOT use Sozee?""",
+
+            '6': f"""CONTENT CRISIS QUESTIONS (focus on the problem):
+• What is the content crisis for {audience}?
+• How does Sozee solve the 1/100 content supply/demand problem?
+• Can I really generate unlimited content with Sozee?
+• Will my fans notice if I use Sozee AI content?
+• What's the ROI of Sozee for {audience}?"""
+        }
+
+        return question_types.get(pattern_id, "Create general FAQ questions about Sozee")
