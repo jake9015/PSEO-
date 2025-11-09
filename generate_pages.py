@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Sozee Landing Page Generator
-Generates 678 SEO-optimized landing pages using Claude API
+Generates 678 SEO-optimized landing pages using Google Gemini API
 """
 
 import os
 import json
 import pandas as pd
-from anthropic import Anthropic
+import google.generativeai as genai
 from dotenv import load_dotenv
 import time
 import random
@@ -17,8 +17,8 @@ from datetime import datetime
 # Load environment variables
 load_dotenv()
 
-# Initialize Anthropic client
-client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+# Initialize Gemini client
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
 # Load configuration files
 with open('config/patterns.json', 'r') as f:
@@ -108,9 +108,12 @@ def create_page_data(pattern, variables):
     
     for var_name, var_value in variables.items():
         url = url.replace(f'{{{var_name}}}', var_value.lower().replace(' ', '-'))
-        
+
         # Handle capitalization in H1
-        if f'{{{var_name.capitalize()}}}' in h1:
+        # Try .title() first for multi-word variables (use_case -> Use_Case, tool_type -> Tool_Type)
+        if f'{{{var_name.title()}}}' in h1:
+            h1 = h1.replace(f'{{{var_name.title()}}}', var_value)
+        elif f'{{{var_name.capitalize()}}}' in h1:
             h1 = h1.replace(f'{{{var_name.capitalize()}}}', var_value)
         elif f'{{{var_name.upper()}}}' in h1:
             h1 = h1.replace(f'{{{var_name.upper()}}}', var_value)
@@ -156,21 +159,20 @@ def generate_content_with_claude(page_data, section):
             pattern_name=page_data['pattern_name'],
             pattern_id=page_data.get('pattern_id', ''),
             h1=page_data['h1'],
-            variables=variables_str,
-            **page_data  # Include all page data for flexible access
+            variables=variables_str
         )
     
     try:
-        message = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=template_config['max_tokens'],
-            temperature=template_config.get('temperature', 0.7),
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                max_output_tokens=template_config['max_tokens'],
+                temperature=template_config.get('temperature', 0.7),
+            )
         )
-        
-        content = message.content[0].text
+
+        content = response.text
         return content.strip()
     
     except Exception as e:
@@ -296,9 +298,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     # Check for API key
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("❌ Error: ANTHROPIC_API_KEY not found in environment variables")
-        print("   Create a .env file with: ANTHROPIC_API_KEY=your-key-here")
+    if not os.environ.get("GEMINI_API_KEY"):
+        print("❌ Error: GEMINI_API_KEY not found in environment variables")
+        print("   Create a .env file with: GEMINI_API_KEY=your-key-here")
         exit(1)
     
     # Run generator
