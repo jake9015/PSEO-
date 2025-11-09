@@ -187,6 +187,7 @@ class PageOutput:
     feature_sections: List[Dict[str, str]] = None
     faq_json: List[Dict[str, str]] = None
     final_cta: str = ""
+    schema_markup: List[Dict[str, Any]] = None
 
     # Metadata
     pseo_variables: Dict[str, str] = None
@@ -212,6 +213,8 @@ class PageOutput:
             self.feature_sections = []
         if self.faq_json is None:
             self.faq_json = []
+        if self.schema_markup is None:
+            self.schema_markup = []
 
     def to_dict(self):
         return {
@@ -229,6 +232,7 @@ class PageOutput:
             'feature_sections': self.feature_sections,
             'faq_json': self.faq_json,
             'final_cta': self.final_cta,
+            'schema_markup': self.schema_markup,
             'pseo_variables': self.pseo_variables,
             'research_sources': self.research_sources,
             'quality_score': self.quality_score,

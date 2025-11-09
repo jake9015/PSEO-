@@ -57,67 +57,89 @@ class CopywritingAgent(BaseAgent):
         )
 
     def _generate_content(self, blueprint: dict, research_data: dict, sections: list) -> dict:
-        """Generate all content sections"""
+        """Generate all content sections using pattern-specific templates"""
+
+        # Load pattern configuration
+        pattern_config = self._load_pattern_config(blueprint.get('pattern_id'))
+        variables = blueprint.get('pseo_variables', {})
+
+        # Build H1 from formula
+        h1 = self._build_h1(pattern_config, variables)
+
+        # Get pattern-specific context
+        pattern_angle = self._get_pattern_angle(blueprint.get('pattern_id'), variables)
 
         # Select viral hook
         import random
         viral_hook = random.choice(self.viral_hooks) if self.viral_hooks else "Transform your content creation"
 
-        prompt = f"""You are an expert copywriter for Sozee.ai, creating landing page content.
+        # Load content templates
+        content_templates = self._load_content_templates()
 
-**Pattern**: {blueprint.get('pattern_name', 'Unknown')}
-**Target Audience**: {blueprint.get('pseo_variables', {}).get('audience', 'Creators')}
+        prompt = f"""You are an expert copywriter for Sozee.ai, creating PSEO landing page content.
 
-**Research Data:**
-{json.dumps(research_data, indent=2)[:2000]}
+**PATTERN CONTEXT:**
+- Pattern: {blueprint.get('pattern_name', 'Unknown')} (Pattern {blueprint.get('pattern_id')})
+- H1 Title: {h1}
+- Eyebrow: {pattern_config.get('eyebrow', '')}
+- Pattern Angle: {pattern_angle}
 
-**Viral Hook to Use**: {viral_hook}
+**TARGET VARIABLES:**
+{self._format_variables(variables)}
 
-**Sozee Key Differentiators:**
-- Custom LORA Training in 30 minutes
-- 1-Click TikTok Cloning
-- Hyper-realistic AI photos and video
-- Built specifically for OnlyFans creators
-- SFW & NSFW capabilities
-- Curated prompt library for creator niche
+**VIRAL HOOK TO USE:**
+{viral_hook}
+(Use this as the opening sentence or headline of the problem section)
 
-**Brand Voice**: Confident, empathetic, slightly edgy. Focus on solving "creator burnout" and the "content crisis"
+**RESEARCH DATA:**
+{self._format_research_data(research_data)}
 
-**Your Task**: Generate complete landing page content
+**PATTERN-SPECIFIC COPYWRITING STRATEGY:**
+{pattern_angle}
 
-**Required Sections:**
-1. Hero Section (h1, subtitle, CTAs)
-2. Problem/Hook (3-4 paragraphs + bullets, start with viral hook)
-3. Solution Overview (Sozee value prop + 3 benefits)
-4. Feature Sections (2-3 key features explained)
-5. Final CTA
+For this pattern, emphasize:
+{self._get_pattern_emphasis(blueprint.get('pattern_id'), variables)}
 
-**Writing Guidelines:**
-- Address reader directly ("you")
-- Keep paragraphs short (2-4 sentences)
-- Use specific examples and numbers from research
-- Emphasize outcomes over features
-- Maintain empathetic yet confident tone
-- Vary language (avoid template-itis)
+**SOZEE KEY DIFFERENTIATORS:**
+- Custom LORA Training in 30 minutes (hyper-realistic, trained on YOUR face)
+- 1-Click TikTok Cloning (replicate viral content instantly)
+- Built specifically for OnlyFans/creator platforms
+- SFW & NSFW capabilities (complete flexibility)
+- Solves the "1/100 content crisis" (1 photoshoot → 10,000+ photos)
+- No technical skills required
 
-**Output as JSON:**
+**BRAND VOICE:**
+Confident yet empathetic, slightly edgy. Speak directly to creator burnout and the content supply crisis. Use "you" language. Be specific with numbers (30 minutes, 1/100 ratio, etc.)
+
+**WRITING GUIDELINES:**
+- Keep paragraphs SHORT (2-4 sentences max)
+- Use specific examples from research data
+- Include real pain points identified for {variables.get('audience', 'creators')}
+- Emphasize OUTCOMES over features ("scale without burnout" not "AI generation")
+- Vary sentence structure (avoid template-itis)
+- Natural keyword integration (no stuffing)
+
+**CTAs FROM PATTERN:**
+- Primary: {pattern_config.get('primary_cta', 'Get Started Free')}
+- Secondary: {pattern_config.get('secondary_cta', 'See How It Works')}
+
+**OUTPUT AS JSON:**
 {{
   "hero": {{
-    "h1": "H1 title",
-    "subtitle": "Compelling subtitle under 150 chars",
-    "primary_cta": "Get Started Free",
-    "secondary_cta": "See How It Works"
+    "h1": "{h1}",
+    "eyebrow": "{pattern_config.get('eyebrow', '')}",
+    "subtitle": "Compelling subtitle under 150 chars (pattern-specific angle)",
+    "primary_cta": "{pattern_config.get('primary_cta', 'Get Started Free')}",
+    "secondary_cta": "{pattern_config.get('secondary_cta', 'See How It Works')}"
   }},
-  "problem": "Full problem agitation section in Markdown",
-  "solution": "Solution overview section in Markdown",
+  "problem": "Full problem agitation section in Markdown (start with viral hook, 3-4 paragraphs + 3 bullets)",
+  "solution": "Solution overview section in Markdown (Sozee value prop + 3 benefits)",
   "features": [
-    {{"title": "Feature 1", "content": "Description"}},
-    {{"title": "Feature 2", "content": "Description"}}
+    {{"title": "Feature 1", "content": "Benefit-focused description"}},
+    {{"title": "Feature 2", "content": "Benefit-focused description"}}
   ],
-  "comparison_table": [
-    {{"feature": "Feature name", "sozee": "How Sozee does it", "competitor": "How competitor does it"}}
-  ],
-  "final_cta": "Final call to action section"
+  "comparison_table": {self._get_comparison_table_instruction(blueprint.get('pattern_id'))},
+  "final_cta": "Final call to action section (reinforce pattern angle)"
 }}
 
 Return ONLY valid JSON."""
@@ -151,3 +173,104 @@ Return ONLY valid JSON."""
                 "comparison_table": [],
                 "final_cta": "Ready to transform your content? Start your free trial today."
             }
+
+    def _load_pattern_config(self, pattern_id: str) -> dict:
+        """Load pattern configuration from patterns.json"""
+        config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'patterns.json')
+        try:
+            with open(config_path, 'r') as f:
+                patterns_data = json.load(f)
+                for pattern in patterns_data.get('patterns', []):
+                    if str(pattern.get('id')) == str(pattern_id):
+                        return pattern
+        except Exception as e:
+            print(f"  ⚠️ Could not load pattern config: {e}")
+        return {}
+
+    def _load_content_templates(self) -> dict:
+        """Load content templates from content_templates.json"""
+        template_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'content_templates.json')
+        try:
+            with open(template_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"  ⚠️ Could not load content templates: {e}")
+        return {}
+
+    def _build_h1(self, pattern_config: dict, variables: dict) -> str:
+        """Build H1 from pattern formula"""
+        h1_formula = pattern_config.get('h1_formula', 'Sozee AI Content Studio')
+
+        # Replace variables in formula
+        h1 = h1_formula
+        for var_name, var_value in variables.items():
+            # Try .title() first (for multi-word variables like use_case)
+            placeholder_title = f'{{{var_name.replace("_", " ").title().replace(" ", "_")}}}'
+            if placeholder_title in h1:
+                h1 = h1.replace(placeholder_title, var_value)
+
+            # Try .capitalize() (for single words)
+            placeholder_cap = f'{{{var_name.capitalize()}}}'
+            if placeholder_cap in h1:
+                h1 = h1.replace(placeholder_cap, var_value)
+
+        return h1
+
+    def _get_pattern_angle(self, pattern_id: str, variables: dict) -> str:
+        """Get pattern-specific copywriting angle"""
+        competitor = variables.get('competitor', '')
+        audience = variables.get('audience', 'creators')
+        use_case = variables.get('use_case', '')
+
+        angles = {
+            '1': f"COMPARISON ANGLE: Emphasize how Sozee differs from {competitor}. Show side-by-side feature comparison. Highlight Sozee's creator-specific advantages (LORA training, NSFW support, OnlyFans optimization).",
+            '2': f"BEST TOOL ANGLE: Position Sozee as the #1 ranked {use_case} for {audience}. Support with specific advantages. Use authoritative language ('the best', 'top-rated', 'recommended').",
+            '3': f"DIRECT TOOL ANGLE: Explain exactly what Sozee does and why it's perfect for {audience}. Focus on specific use case benefits. Be clear and benefit-focused.",
+            '4': f"ALTERNATIVE ANGLE: Explain why {audience} are switching from {competitor} to Sozee. Address {competitor}'s limitations directly. Position Sozee as the better choice.",
+            '5': f"REVIEW ANGLE: Provide honest, balanced evaluation of Sozee for {audience}. Include pros, cons, and recommendations. Be trustworthy and authoritative.",
+            '6': f"CONTENT CRISIS ANGLE: Emphasize the 1/100 supply/demand problem. Show how Sozee specifically solves creator burnout and content bottlenecks. Use urgent language around the crisis."
+        }
+
+        return angles.get(pattern_id, "Focus on Sozee's value proposition and benefits.")
+
+    def _get_pattern_emphasis(self, pattern_id: str, variables: dict) -> str:
+        """Get what to emphasize for each pattern"""
+        competitor = variables.get('competitor', '')
+
+        emphasis = {
+            '1': f"• Why Sozee is better than {competitor} for creators\n• Specific feature differences (LORA, NSFW, ease of use)\n• Creator-specific advantages\n• Pricing comparison if available",
+            '2': "• Why Sozee ranks #1\n• Unique creator-focused features\n• Success stories or results\n• What makes it better than alternatives",
+            '3': "• Specific benefits for this platform\n• How easy it is to use\n• Speed and quality of results\n• Perfect use case fit",
+            '4': f"• Why users are leaving {competitor}\n• What {competitor} lacks\n• Migration ease\n• Immediate benefits of switching",
+            '5': "• Honest pros and cons\n• Who it's perfect for\n• Value for money\n• Recommendation strength",
+            '6': "• The 1/100 crisis reality\n• Creator burnout epidemic\n• How Sozee uniquely solves it\n• Dramatic before/after outcomes"
+        }
+
+        return emphasis.get(pattern_id, "• Key benefits\n• Use case fit\n• Call to action")
+
+    def _get_comparison_table_instruction(self, pattern_id: str) -> str:
+        """Return comparison table instruction based on pattern"""
+        if pattern_id in ['1', '4']:  # Comparison, Alternative
+            return '''[
+    {"feature": "LORA Training", "sozee": "30 minutes, custom", "competitor": "Use competitor data"},
+    {"feature": "NSFW Support", "sozee": "Full support", "competitor": "Use competitor data"},
+    {"feature": "Creator Focus", "sozee": "Built for OnlyFans", "competitor": "Use competitor data"}
+  ]'''
+        else:
+            return '[]'
+
+    def _format_variables(self, variables: dict) -> str:
+        """Format variables for prompt"""
+        return '\n'.join([f"- {key.replace('_', ' ').title()}: {value}" for key, value in variables.items()])
+
+    def _format_research_data(self, research_data: dict) -> str:
+        """Format research data for prompt"""
+        if not research_data:
+            return "No research data available"
+
+        formatted = []
+        for agent_name, data in research_data.items():
+            formatted.append(f"\n**From {agent_name}:**")
+            formatted.append(json.dumps(data, indent=2)[:1000])
+
+        return '\n'.join(formatted)

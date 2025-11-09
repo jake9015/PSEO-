@@ -26,6 +26,9 @@ from agents.copywriting import CopywritingAgent
 from agents.faq_generator import FAQGeneratorAgent
 from agents.seo_optimizer import SEOOptimizationAgent
 from agents.quality_control import QualityControlAgent
+from agents.comparison_table import ComparisonTableAgent
+from agents.statistics_agent import StatisticsAgent
+from agents.schema_markup import SchemaMarkupAgent
 
 
 class AgentManager:
@@ -45,7 +48,10 @@ class AgentManager:
             'copywriting': CopywritingAgent(viral_hooks=viral_hooks),
             'faq_generator': FAQGeneratorAgent(),
             'seo_optimizer': SEOOptimizationAgent(),
-            'quality_control': QualityControlAgent()
+            'quality_control': QualityControlAgent(),
+            'comparison_table': ComparisonTableAgent(),
+            'statistics': StatisticsAgent(),
+            'schema_markup': SchemaMarkupAgent()
         }
 
         self.message_log = []
@@ -214,6 +220,18 @@ class PSEOOrchestrator:
                         'priority': 'high'
                     })
 
+            # Add statistics research (especially important for Pattern 6)
+            research_tasks.append({
+                'agent': 'Statistics_Agent',
+                'params': {
+                    'pattern_id': pattern_id,
+                    'topic': blueprint.h1,
+                    'audience': variables.get('audience', 'creators'),
+                    'platform': variables.get('platform', 'social media')
+                },
+                'priority': 'medium'
+            })
+
             # Execute research tasks
             research_results = self.agent_manager.execute_parallel_tasks(
                 research_tasks,
@@ -251,8 +269,8 @@ class PSEOOrchestrator:
         content = content_response.data['content']
         print(f"  ✓ Content generated")
 
-        # Step 4: Supplementary Content (FAQ + SEO) - Parallel
-        print(f"\n🔧 STEP 4: Generating FAQ and SEO Metadata")
+        # Step 4: Supplementary Content (FAQ + SEO + Comparison + Schema) - Parallel
+        print(f"\n🔧 STEP 4: Generating Supplementary Content")
 
         h1 = content.get('hero', {}).get('h1', '')
 
@@ -275,24 +293,63 @@ class PSEOOrchestrator:
             }
         ]
 
+        # Add comparison table for patterns 1 & 4 (Comparison, Alternative)
+        if pattern_id in ['1', '4']:
+            supplementary_tasks.append({
+                'agent': 'Comparison_Table_Agent',
+                'params': {
+                    'pattern_id': pattern_id,
+                    'competitor': variables.get('competitor', ''),
+                    'audience': variables.get('audience', 'creators')
+                },
+                'priority': 'high'
+            })
+
         supplementary_results = self.agent_manager.execute_parallel_tasks(
             supplementary_tasks,
             context={
                 'blueprint': blueprint_dict,
                 'pseo_variables': variables,
-                'content': content
+                'content': content,
+                'research_data': research_data
             }
         )
 
         # Extract supplementary data
         faq_data = supplementary_results.get('FAQ_Generator_Agent')
         seo_data = supplementary_results.get('SEO_Optimization_Agent')
+        comparison_data = supplementary_results.get('Comparison_Table_Agent')
 
         faqs = faq_data.data['faqs'] if faq_data and faq_data.status == 'completed' else []
         metadata = seo_data.data if seo_data and seo_data.status == 'completed' else {}
+        comparison_table = comparison_data.data['comparison_table'] if comparison_data and comparison_data.status == 'completed' else []
 
         print(f"  ✓ FAQ: {len(faqs)} pairs")
         print(f"  ✓ SEO metadata generated")
+        if pattern_id in ['1', '4']:
+            print(f"  ✓ Comparison table: {len(comparison_table)} features")
+
+        # Generate Schema Markup (after FAQ and metadata are ready)
+        print(f"\n📊 STEP 4b: Generating Schema Markup")
+
+        schema_response = self.agent_manager.send_message(
+            from_agent='orchestrator',
+            to_agent='Schema_Markup_Agent',
+            task={
+                'pattern_id': pattern_id,
+                'page_data': content,
+                'faqs': faqs,
+                'meta': metadata
+            },
+            context={
+                'blueprint': blueprint_dict,
+                'pseo_variables': variables
+            },
+            priority='medium'
+        )
+
+        schemas = schema_response.data['schemas'] if schema_response and schema_response.status == 'completed' else []
+        print(f"  ✓ Generated {len(schemas)} schema types")
 
         # Step 5: Assemble Page
         print(f"\n🔨 STEP 5: Assembling Page")
@@ -303,7 +360,9 @@ class PSEOOrchestrator:
             content=content,
             faqs=faqs,
             metadata=metadata,
-            research_data=research_data
+            research_data=research_data,
+            comparison_table=comparison_table,
+            schemas=schemas
         )
 
         print(f"  ✓ Page assembled: {page_output.page_id}")
@@ -351,7 +410,8 @@ class PSEOOrchestrator:
 
     def _assemble_page(self, blueprint: ContentBlueprint, variables: Dict,
                       content: Dict, faqs: List, metadata: Dict,
-                      research_data: Dict) -> PageOutput:
+                      research_data: Dict, comparison_table: List = None,
+                      schemas: List = None) -> PageOutput:
         """Assemble final page output from all components"""
 
         # Build URL slug
@@ -359,6 +419,9 @@ class PSEOOrchestrator:
 
         # Extract hero section
         hero = content.get('hero', {})
+
+        # Use comparison_table from specialized agent if available, otherwise fallback to content
+        final_comparison_table = comparison_table if comparison_table else content.get('comparison_table', [])
 
         # Build page output
         page = PageOutput(
@@ -372,14 +435,15 @@ class PSEOOrchestrator:
             hero_section=hero,
             problem_agitation=content.get('problem', ''),
             solution_overview=content.get('solution', ''),
-            comparison_table_json=content.get('comparison_table', []),
+            comparison_table_json=final_comparison_table,
             feature_sections=content.get('features', []),
             faq_json=faqs,
             final_cta=content.get('final_cta', ''),
             pseo_variables=variables,
             research_sources=self._extract_sources(research_data),
             generation_model=blueprint.generation_model,
-            agents_used=blueprint.required_agents
+            agents_used=blueprint.required_agents,
+            schema_markup=schemas if schemas else []
         )
 
         return page
