@@ -28,7 +28,10 @@ PSEO-/
 │   ├── copywriting.py            # Content generation agent
 │   ├── faq_generator.py          # FAQ creation agent
 │   ├── seo_optimizer.py          # SEO metadata agent
-│   └── quality_control.py        # Quality assurance agent
+│   ├── quality_control.py        # Quality assurance agent
+│   ├── comparison_table.py       # ⭐ NEW: Comparison table generator
+│   ├── statistics_agent.py       # ⭐ NEW: Market data & statistics
+│   └── schema_markup.py          # ⭐ NEW: SEO schema markup
 │
 ├── agent_framework.py             # Base agent classes and data structures
 ├── pseo_orchestrator.py          # Multi-agent orchestrator
@@ -125,19 +128,24 @@ User Request
     ↓
 PSEO Strategist (Creates Blueprint)
     ↓
-┌─────────────────────────────┐
-│   Parallel Research Phase   │
-│  - Competitor Research      │
-│  - Audience Insights        │
-└─────────────────────────────┘
+┌─────────────────────────────────┐
+│   Parallel Research Phase       │
+│  - Competitor Research          │
+│  - Audience Insights            │
+│  - Statistics Agent ⭐ NEW      │
+└─────────────────────────────────┘
     ↓
 Copywriting Agent (Synthesizes Content)
     ↓
-┌─────────────────────────────┐
-│   Parallel Meta Generation  │
-│  - FAQ Generator            │
-│  - SEO Optimizer            │
-└─────────────────────────────┘
+┌─────────────────────────────────┐
+│   Parallel Meta Generation      │
+│  - FAQ Generator                │
+│  - SEO Optimizer                │
+│  - Comparison Table ⭐ NEW      │
+│    (Patterns 1 & 4 only)        │
+└─────────────────────────────────┘
+    ↓
+Schema Markup Agent ⭐ NEW (All Patterns)
     ↓
 Quality Control Agent (Validates)
     ↓
@@ -147,7 +155,12 @@ Final Page Output (JSON + CSV)
 **Performance:**
 - 10-20 pages/hour
 - $0.50-1.00 per page
-- 5-10 API calls per page
+- 7-12 API calls per page (increased with new agents)
+
+**New Agents:**
+- **Statistics Agent:** Gathers credible market data for authority (all patterns)
+- **Comparison Table Agent:** Structured feature comparison (patterns 1 & 4)
+- **Schema Markup Agent:** SEO rich snippets via Schema.org (all patterns)
 
 ## 📚 Pattern Library
 
