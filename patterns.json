@@ -1,0 +1,76 @@
+{
+  "patterns": [
+    {
+      "id": 1,
+      "name": "Competitor Comparison",
+      "description": "Compare Sozee vs competitor for specific audience",
+      "url_formula": "/sozee-vs-{competitor}-for-{audience}",
+      "h1_formula": "Sozee vs {Competitor} for {Audience}",
+      "variables": ["competitor", "audience"],
+      "show_comparison_table": true,
+      "eyebrow": "Head-to-Head Comparison",
+      "primary_cta": "Compare Features",
+      "secondary_cta": "Try Sozee Free"
+    },
+    {
+      "id": 2,
+      "name": "Best Tool",
+      "description": "Best use case tool for specific audience",
+      "url_formula": "/best-{use_case}-for-{audience}",
+      "h1_formula": "Best {Use_Case} for {Audience}",
+      "variables": ["use_case", "audience"],
+      "show_comparison_table": false,
+      "eyebrow": "2025 Rankings",
+      "primary_cta": "Start Free Trial",
+      "secondary_cta": "See How It Works"
+    },
+    {
+      "id": 3,
+      "name": "Direct Tool",
+      "description": "Platform-specific tool landing page",
+      "url_formula": "/{platform}-{tool_type}",
+      "h1_formula": "{Platform} {Tool_Type}",
+      "variables": ["platform", "tool_type"],
+      "show_comparison_table": false,
+      "eyebrow": "Professional Content Tool",
+      "primary_cta": "Get Started Free",
+      "secondary_cta": "See Demo"
+    },
+    {
+      "id": 4,
+      "name": "Alternative",
+      "description": "Competitor alternative for specific audience",
+      "url_formula": "/{competitor}-alternative-for-{audience}",
+      "h1_formula": "{Competitor} Alternative for {Audience}",
+      "variables": ["competitor", "audience"],
+      "show_comparison_table": true,
+      "eyebrow": "Better Alternative",
+      "primary_cta": "Switch to Sozee",
+      "secondary_cta": "Compare Features"
+    },
+    {
+      "id": 5,
+      "name": "Review",
+      "description": "Sozee product review for specific audience",
+      "url_formula": "/sozee-review-{audience}",
+      "h1_formula": "Sozee Review for {Audience}",
+      "variables": ["audience"],
+      "show_comparison_table": false,
+      "eyebrow": "Honest Review",
+      "primary_cta": "Start Free Trial",
+      "secondary_cta": "See Pricing"
+    },
+    {
+      "id": 6,
+      "name": "Content Crisis",
+      "description": "Solve the content crisis for platform and audience",
+      "url_formula": "/content-crisis-solution-for-{platform}-{audience}",
+      "h1_formula": "Solve the Content Crisis for {Platform} {Audience}",
+      "variables": ["platform", "audience"],
+      "show_comparison_table": false,
+      "eyebrow": "The Real Problem",
+      "primary_cta": "Schedule Demo",
+      "secondary_cta": "Learn About Crisis"
+    }
+  ]
+}

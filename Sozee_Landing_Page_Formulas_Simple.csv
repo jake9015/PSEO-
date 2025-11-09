@@ -1,0 +1,9 @@
+Pattern,URL_Formula,H1_Formula,Variables_Needed
+1A,/sozee-vs-{competitor}-for-{audience},Sozee vs {Competitor} for {Audience},competitor + audience
+1B,/sozee-vs-{competitor}-{platform},Sozee vs {Competitor} for {Platform},competitor + platform
+2A,/best-{use_case}-for-{audience},Best {Use_Case} for {Audience},use_case + audience
+8,/{competitor}-alternative-{audience},{Competitor} Alternative for {Audience},competitor + audience
+9,/sozee-review-{audience},Sozee Review for {Audience},audience
+10,/ai-{tool_type}-{platform},AI {Tool_Type} for {Platform},tool_type + platform
+11,/{platform}-{tool_type},{Platform} {Tool_Type},platform + tool_type
+12,/content-crisis-solution-{audience},Solve the Content Crisis for {Audience},audience

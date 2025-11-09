@@ -1,0 +1,67 @@
+ORIGINAL vs CONSOLIDATED PATTERNS - SIDE BY SIDE
+
+========================================
+DUPLICATE CONTENT ISSUES IDENTIFIED
+========================================
+
+ISSUE #1: Pattern 10 vs Pattern 11
+-----------------------------------
+Pattern 10: /ai-{tool_type}-{platform}
+Example: /ai-photo-generator-onlyfans
+
+Pattern 11: /{platform}-{tool_type}  
+Example: /onlyfans-ai-photo-generator
+
+PROBLEM: Both target "ai photo generator onlyfans"
+SOLUTION: Keep Pattern 11 only (more natural language)
+PAGES REMOVED: 150
+
+
+ISSUE #2: Pattern 1A vs Pattern 1B
+-----------------------------------
+Pattern 1A: /sozee-vs-{competitor}-for-{audience}
+Example: /sozee-vs-higgsfield-for-onlyfans-creators
+
+Pattern 1B: /sozee-vs-{competitor}-{platform}
+Example: /sozee-vs-higgsfield-onlyfans
+
+PROBLEM: Both target "sozee vs higgsfield onlyfans"
+SOLUTION: Keep Pattern 1A only (more specific)
+PAGES REMOVED: 225
+
+
+ISSUE #3: Pattern 12 Too Generic
+-----------------------------------
+Original: /content-crisis-solution-{audience}
+Example: /content-crisis-solution-agencies
+
+PROBLEM: Not specific enough, weak SEO signal
+SOLUTION: Add platform → /content-crisis-solution-for-{platform}-{audience}
+Example: /content-crisis-solution-for-onlyfans-agencies
+PAGES CHANGED: 8 → 120
+
+========================================
+SUMMARY
+========================================
+
+Original Pattern Count: 8 patterns
+Consolidated Pattern Count: 6 patterns
+
+Original Page Count: 941 pages
+Consolidated Page Count: 678 pages
+
+Pages Removed: 263 duplicate/competing pages
+Pages Added: 112 (Pattern 12 expansion)
+
+Net Change: -263 duplicate pages
+
+========================================
+RECOMMENDED: USE CONSOLIDATED VERSION
+========================================
+
+✅ No keyword cannibalization
+✅ Better SEO performance per page
+✅ Clearer user experience
+✅ Faster to build (30% fewer pages)
+✅ Stronger page authority (no split link equity)
+✅ Better Google E-E-A-T signals

@@ -1,0 +1,8 @@
+Pattern,URL_Formula,H1_Formula,Variables_Needed,Total_Pages
+1,/sozee-vs-{competitor}-for-{audience},Sozee vs {Competitor} for {Audience},competitor + audience,120
+2,/best-{use_case}-for-{audience},Best {Use_Case} for {Audience},use_case + audience,160
+3,/{platform}-{tool_type},{Platform} {Tool_Type},platform + tool_type,150
+4,/{competitor}-alternative-for-{audience},{Competitor} Alternative for {Audience},competitor + audience,120
+5,/sozee-review-{audience},Sozee Review for {Audience},audience,8
+6,/content-crisis-solution-for-{platform}-{audience},Solve the Content Crisis for {Platform} {Audience},platform + audience,120
+,,,,TOTAL: 678

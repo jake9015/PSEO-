@@ -1,0 +1,57 @@
+{
+  "competitors": {
+    "high_priority": ["Higgsfield", "Krea", "Midjourney", "Runway", "Stable Diffusion"],
+    "medium_priority": ["DALL-E", "Leonardo.ai", "Artbreeder"],
+    "low_priority": ["Civitai", "DreamStudio", "Glif", "Ideogram", "Pika", "Playground AI", "Pykaso"],
+    "all": [
+      "Higgsfield", "Krea", "Midjourney", "Runway", "Stable Diffusion",
+      "DALL-E", "Leonardo.ai", "Artbreeder", "Civitai", "DreamStudio",
+      "Glif", "Ideogram", "Pika", "Playground AI", "Pykaso"
+    ]
+  },
+  "platforms": {
+    "high_priority": ["OnlyFans", "Patreon", "FanVue"],
+    "medium_priority": ["Fansly", "MyM", "LoyalFans"],
+    "low_priority": ["Slushy", "4Based", "AVN Stars", "AdmireMe", "Fanhouse", "Glow", "IsMyGirl", "JustFor.Fans", "ManyVids"],
+    "all": [
+      "OnlyFans", "Patreon", "FanVue", "Fansly", "MyM", "LoyalFans",
+      "Slushy", "4Based", "AVN Stars", "AdmireMe", "Fanhouse", "Glow",
+      "IsMyGirl", "JustFor.Fans", "ManyVids"
+    ]
+  },
+  "audiences": {
+    "high_priority": ["Creators", "Agencies", "Models"],
+    "medium_priority": ["Content Creators"],
+    "low_priority": ["Influencers", "Management Agencies", "Content Managers", "Adult Creators"],
+    "all": [
+      "Creators", "Agencies", "Models", "Content Creators",
+      "Influencers", "Management Agencies", "Content Managers", "Adult Creators"
+    ]
+  },
+  "use_cases": {
+    "high_priority": ["AI Photo", "AI Video", "Virtual Photoshoot", "LORA Model"],
+    "medium_priority": ["AI Portrait", "AI Selfie", "AI Headshot", "Profile Picture"],
+    "low_priority": [
+      "AI Lifestyle", "AI Fashion", "AI Lingerie", "AI Outfits",
+      "Boudoir Photos", "Glamour Shot", "AI Cosplay", "AI Fitness",
+      "AI Background", "NSFW Content", "SFW Content", "AI Feet Pics"
+    ],
+    "all": [
+      "AI Photo", "AI Video", "Virtual Photoshoot", "LORA Model",
+      "AI Portrait", "AI Selfie", "AI Headshot", "Profile Picture",
+      "AI Lifestyle", "AI Fashion", "AI Lingerie", "AI Outfits",
+      "Boudoir Photos", "Glamour Shot", "AI Cosplay", "AI Fitness",
+      "AI Background", "NSFW Content", "SFW Content", "AI Feet Pics"
+    ]
+  },
+  "tool_types": {
+    "high_priority": ["Photo Generator", "Video Generator", "Content Studio"],
+    "medium_priority": ["LORA Trainer", "Face Swap Tool"],
+    "low_priority": ["Background Generator", "Portrait Creator", "TikTok Clone Tool", "Photo Editor", "AI Model Trainer"],
+    "all": [
+      "Photo Generator", "Video Generator", "Content Studio", "LORA Trainer",
+      "Face Swap Tool", "Background Generator", "Portrait Creator",
+      "TikTok Clone Tool", "Photo Editor", "AI Model Trainer"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+# SOZEE LANDING PAGES - SIMPLE REFERENCE
+
+## THE 8 PATTERNS
+
+**Pattern 1A: Competitor vs Audience**
+Formula: /sozee-vs-{competitor}-for-{audience}
+Example: /sozee-vs-higgsfield-for-onlyfans-creators
+Variables: competitor (15 options) + audience (8 options) = 120 pages
+
+**Pattern 1B: Competitor vs Platform**
+Formula: /sozee-vs-{competitor}-{platform}
+Example: /sozee-vs-krea-onlyfans
+Variables: competitor (15 options) + platform (15 options) = 225 pages
+
+**Pattern 2A: Best Tool**
+Formula: /best-{use_case}-for-{audience}
+Example: /best-ai-photo-generator-for-onlyfans-agencies
+Variables: use_case (20 options) + audience (8 options) = 160 pages
+
+**Pattern 8: Alternative**
+Formula: /{competitor}-alternative-{audience}
+Example: /higgsfield-alternative-onlyfans-creators
+Variables: competitor (15 options) + audience (8 options) = 120 pages
+
+**Pattern 9: Review**
+Formula: /sozee-review-{audience}
+Example: /sozee-review-onlyfans-agencies
+Variables: audience (8 options) = 8 pages
+
+**Pattern 10: Tool for Platform**
+Formula: /ai-{tool_type}-{platform}
+Example: /ai-photo-generator-onlyfans
+Variables: tool_type (10 options) + platform (15 options) = 150 pages
+
+**Pattern 11: Platform Tool**
+Formula: /{platform}-{tool_type}
+Example: /onlyfans-ai-photo-generator
+Variables: platform (15 options) + tool_type (10 options) = 150 pages
+
+**Pattern 12: Content Crisis**
+Formula: /content-crisis-solution-{audience}
+Example: /content-crisis-solution-onlyfans-agencies
+Variables: audience (8 options) = 8 pages
+
+---
+
+## VARIABLES
+
+**{competitor}** (15):
+Higgsfield, Krea, Midjourney, Runway, Stable Diffusion, DALL-E, Leonardo.ai, Artbreeder, Civitai, DreamStudio, Glif, Ideogram, Pika, Playground AI, Pykaso
+
+**{platform}** (15):
+OnlyFans, Patreon, FanVue, Fansly, MyM, LoyalFans, Slushy, 4Based, AVN Stars, AdmireMe, Fanhouse, Glow, IsMyGirl, JustFor.Fans, ManyVids
+
+**{audience}** (8):
+Creators, Agencies, Models, Content Creators, Influencers, Management Agencies, Content Managers, Adult Creators
+
+**{use_case}** (20):
+AI Photo, AI Video, AI Portrait, AI Selfie, Virtual Photoshoot, LORA Model, AI Headshot, Profile Picture, AI Lifestyle, AI Fashion, AI Lingerie, AI Outfits, Boudoir Photos, Glamour Shot, AI Cosplay, AI Fitness, AI Background, NSFW Content, SFW Content, AI Feet Pics
+
+**{tool_type}** (10):
+Photo Generator, Video Generator, Content Studio, LORA Trainer, Face Swap Tool, Background Generator, Portrait Creator, TikTok Clone Tool, Photo Editor, AI Model Trainer
+
+---
+
+## TOTAL: 941 LANDING PAGES

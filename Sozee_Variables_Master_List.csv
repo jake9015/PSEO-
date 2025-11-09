@@ -1,0 +1,69 @@
+Variable_Type,Variable_Name,Use_In_Patterns,Priority
+competitor,Higgsfield,1A 1B 8,High
+competitor,Krea,1A 1B 8,High
+competitor,Midjourney,1A 1B 8,High
+competitor,Runway,1A 1B 8,High
+competitor,Stable Diffusion,1A 1B 8,Medium
+competitor,DALL-E,1A 1B 8,Medium
+competitor,Leonardo.ai,1A 1B 8,Medium
+competitor,Artbreeder,1A 1B 8,Low
+competitor,Civitai,1A 1B 8,Low
+competitor,DreamStudio,1A 1B 8,Low
+competitor,Glif,1A 1B 8,Low
+competitor,Ideogram,1A 1B 8,Low
+competitor,Pika,1A 1B 8,Low
+competitor,Playground AI,1A 1B 8,Low
+competitor,Pykaso,1A 1B 8,Low
+platform,OnlyFans,1B 10 11,High
+platform,Patreon,1B 10 11,High
+platform,FanVue,1B 10 11,Medium
+platform,Fansly,1B 10 11,Medium
+platform,MyM,1B 10 11,Low
+platform,LoyalFans,1B 10 11,Low
+platform,Slushy,1B 10 11,Low
+platform,4Based,1B 10 11,Low
+platform,AVN Stars,1B 10 11,Low
+platform,AdmireMe,1B 10 11,Low
+platform,Fanhouse,1B 10 11,Low
+platform,Glow,1B 10 11,Low
+platform,IsMyGirl,1B 10 11,Low
+platform,JustFor.Fans,1B 10 11,Low
+platform,ManyVids,1B 10 11,Low
+audience,Creators,1A 2A 8 9 12,High
+audience,Agencies,1A 2A 8 9 12,High
+audience,Models,1A 2A 8 9 12,Medium
+audience,Content Creators,1A 2A 8 9 12,Medium
+audience,Influencers,1A 2A 8 9 12,Low
+audience,Management Agencies,1A 2A 8 9 12,Low
+audience,Content Managers,1A 2A 8 9 12,Low
+audience,Adult Creators,1A 2A 8 9 12,Low
+use_case,AI Photo,2A,High
+use_case,AI Video,2A,High
+use_case,Virtual Photoshoot,2A,High
+use_case,LORA Model,2A,High
+use_case,AI Portrait,2A,Medium
+use_case,AI Selfie,2A,Medium
+use_case,AI Headshot,2A,Medium
+use_case,Profile Picture,2A,Medium
+use_case,AI Lifestyle,2A,Low
+use_case,AI Fashion,2A,Low
+use_case,AI Lingerie,2A,Low
+use_case,AI Outfits,2A,Low
+use_case,Boudoir Photos,2A,Low
+use_case,Glamour Shot,2A,Low
+use_case,AI Cosplay,2A,Low
+use_case,AI Fitness,2A,Low
+use_case,AI Background,2A,Low
+use_case,NSFW Content,2A,Low
+use_case,SFW Content,2A,Low
+use_case,AI Feet Pics,2A,Low
+tool_type,Photo Generator,10 11,High
+tool_type,Video Generator,10 11,High
+tool_type,Content Studio,10 11,High
+tool_type,LORA Trainer,10 11,Medium
+tool_type,Face Swap Tool,10 11,Medium
+tool_type,Background Generator,10 11,Low
+tool_type,Portrait Creator,10 11,Low
+tool_type,TikTok Clone Tool,10 11,Low
+tool_type,Photo Editor,10 11,Low
+tool_type,AI Model Trainer,10 11,Low
