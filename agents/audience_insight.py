@@ -21,8 +21,7 @@ class AudienceInsightAgent(ResearchAgent):
         super().__init__(
             name="Audience_Insight_Agent",
             role="Audience Psychology & Insight Specialist",
-            model=model,
-            tools=['web_search', 'competitor_analysis']
+            model=model
         )
         if model:
             self.genai_model = genai.GenerativeModel(model)

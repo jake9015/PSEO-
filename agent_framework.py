@@ -108,40 +108,28 @@ class BaseAgent(ABC):
 
 
 class ResearchAgent(BaseAgent):
-    """Base class for agents that do research"""
+    """
+    Base class for agents that perform research using AI
 
-    def __init__(self, name: str, role: str, model=None, tools: List[str] = None):
+    Research agents use Gemini AI to gather information, analyze data, and synthesize insights.
+    They maintain an in-memory cache to avoid redundant API calls for the same research.
+
+    Note: This implementation uses AI-based research rather than web scraping. The agents
+    leverage Gemini's knowledge base to provide factual, current information without
+    requiring external web search APIs.
+    """
+
+    def __init__(self, name: str, role: str, model=None):
+        """
+        Initialize a research agent
+
+        Args:
+            name: Agent name (e.g., 'Competitor_Research_Agent')
+            role: Agent's role description (e.g., 'Market Intelligence Analyst')
+            model: Optional Gemini model name (defaults to gemini-2.0-flash-exp in subclasses)
+        """
         super().__init__(name, role, model)
-        self.tools = tools or []
         self.research_cache = {}
-
-    def web_search(self, query: str) -> List[Dict[str, str]]:
-        """
-        Placeholder for web search functionality
-
-        Args:
-            query: Search query string
-
-        Returns:
-            List of search result dictionaries with 'title', 'url', 'snippet' keys
-        """
-        # In production, integrate with Google Search API, Serper, etc.
-        print(f"  [Research] Searching: {query}")
-        return []
-
-    def web_fetch(self, url: str) -> str:
-        """
-        Placeholder for web fetch functionality
-
-        Args:
-            url: URL to fetch content from
-
-        Returns:
-            Page content as string
-        """
-        # In production, use requests + BeautifulSoup
-        print(f"  [Research] Fetching: {url}")
-        return ""
 
     def cache_research(self, key: str, data: Any) -> None:
         """
