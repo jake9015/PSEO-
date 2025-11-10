@@ -50,6 +50,7 @@ class AgentResponse:
     execution_time: float = 0.0
     confidence: float = 1.0
     timestamp: str = None
+    from_cache: bool = False  # Indicates if response came from cache
 
     def __post_init__(self):
         if self.timestamp is None:
@@ -67,7 +68,8 @@ class AgentResponse:
             'sources': self.sources,
             'execution_time': self.execution_time,
             'confidence': self.confidence,
-            'timestamp': self.timestamp
+            'timestamp': self.timestamp,
+            'from_cache': self.from_cache
         }
 
 
@@ -114,26 +116,56 @@ class ResearchAgent(BaseAgent):
         self.research_cache = {}
 
     def web_search(self, query: str) -> List[Dict[str, str]]:
-        """Placeholder for web search - to be implemented"""
+        """
+        Placeholder for web search functionality
+
+        Args:
+            query: Search query string
+
+        Returns:
+            List of search result dictionaries with 'title', 'url', 'snippet' keys
+        """
         # In production, integrate with Google Search API, Serper, etc.
         print(f"  [Research] Searching: {query}")
         return []
 
     def web_fetch(self, url: str) -> str:
-        """Placeholder for web fetch - to be implemented"""
+        """
+        Placeholder for web fetch functionality
+
+        Args:
+            url: URL to fetch content from
+
+        Returns:
+            Page content as string
+        """
         # In production, use requests + BeautifulSoup
         print(f"  [Research] Fetching: {url}")
         return ""
 
-    def cache_research(self, key: str, data: Any):
-        """Cache research results"""
+    def cache_research(self, key: str, data: Any) -> None:
+        """
+        Cache research results for reuse
+
+        Args:
+            key: Unique cache key
+            data: Data to cache (any JSON-serializable type)
+        """
         self.research_cache[key] = {
             'data': data,
             'timestamp': datetime.now().isoformat()
         }
 
     def get_cached(self, key: str) -> Optional[Any]:
-        """Retrieve cached research"""
+        """
+        Retrieve cached research data
+
+        Args:
+            key: Cache key to look up
+
+        Returns:
+            Cached data if found, None otherwise
+        """
         if key in self.research_cache:
             return self.research_cache[key]['data']
         return None

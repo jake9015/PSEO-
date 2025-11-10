@@ -1,7 +1,41 @@
 #!/usr/bin/env python3
 """
 PSEO Batch Generator - Phased Rollout Script
-Generates PSEO pages in controlled batches following the 6-week rollout strategy
+=============================================
+
+Generates PSEO landing pages in controlled batches following the 6-week rollout strategy.
+
+This module implements production-scale batch processing with checkpointing, error recovery,
+and phased rollout capabilities. It uses the PSEOOrchestrator to generate pages and exports
+results to WordPress-compatible CSV and JSON formats.
+
+Rollout Phases:
+---------------
+- Week 1: 10 high-priority pages (manual QA)
+- Week 2: 50 pages (patterns 1 & 4)
+- Week 3: 200 pages (patterns 1, 4, 6, 2)
+- Week 4-6: All remaining pages (~418 pages)
+
+Features:
+---------
+- Checkpoint system (saves every 10 pages)
+- Resume from interruption
+- Failed task logging
+- CSV and JSON export
+- Variable combination generation
+
+⚠️  IMPORTANT: Update COMPETITORS, PLATFORMS, AUDIENCES lists to match config/variables.json
+
+Usage:
+------
+    # Test with single page
+    python batch_generator.py --phase week_1 --limit 1
+
+    # Generate Week 1 (10 pages)
+    python batch_generator.py --phase week_1
+
+    # Resume from checkpoint
+    python batch_generator.py --phase week_2 --start-index 10
 """
 
 import asyncio

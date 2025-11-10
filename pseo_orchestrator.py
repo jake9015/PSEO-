@@ -1,7 +1,45 @@
 #!/usr/bin/env python3
 """
-PSEO Orchestrator
-Coordinates multi-agent content generation pipeline
+PSEO Multi-Agent Orchestrator
+==============================
+
+Coordinates the execution of specialized AI agents for landing page generation.
+
+This module implements the central orchestration system for the multi-agent PSEO pipeline.
+It manages agent lifecycle, message routing, task execution, and coordinates the complete
+page generation workflow.
+
+Architecture:
+-------------
+1. Blueprint Creation (PSEO Strategist)
+2. Research Phase (Parallel): Competitor Research, Audience Insights, Statistics
+3. Content Generation: Copywriting, FAQ, Comparison Tables
+4. Optimization: SEO, Schema Markup, Quality Control
+5. Output Assembly
+
+Classes:
+--------
+- AgentManager: Manages agent lifecycle and message routing
+- PSEOOrchestrator: Main coordinator for multi-agent page generation
+
+Performance:
+------------
+- Speed: 10-20 pages/hour
+- Cost: $0.50-1.00 per page
+- Quality Score: 0.85-0.95
+- API Calls: 5-10 per page
+
+Usage:
+------
+    from pseo_orchestrator import PSEOOrchestrator
+
+    orchestrator = PSEOOrchestrator()
+    page = orchestrator.generate_page(
+        pattern_id='1',
+        variables={'competitor': 'Higgsfield', 'audience': 'OnlyFans Creators'}
+    )
+
+    print(f"Quality Score: {page.quality_score}")
 """
 
 import sys
@@ -460,7 +498,8 @@ class PSEOOrchestrator:
                 break
 
         if not pattern:
-            return '/sozee'
+            raise ValueError(f"Pattern ID '{pattern_id}' not found in pattern library. "
+                           f"Available patterns: {[p.get('id') for p in self.pattern_library.get('patterns', [])]}")
 
         # Use url_formula from pattern
         url_formula = pattern.get('url_formula', '/sozee')

@@ -301,10 +301,17 @@ Return ONLY valid JSON matching this structure."""
         template_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'section_templates.json')
         try:
             with open(template_path, 'r') as f:
-                return json.load(f)
+                templates = json.load(f)
+                # Validate that templates were loaded
+                if not templates or 'patterns' not in templates:
+                    raise ValueError("Section templates file is empty or missing 'patterns' key")
+                return templates
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Section templates file not found at: {template_path}")
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON in section templates file: {e}")
         except Exception as e:
-            print(f"  ⚠️ Could not load section templates: {e}")
-        return {}
+            raise RuntimeError(f"Error loading section templates: {e}")
 
     def _replace_variables(self, text: str, variables: dict) -> str:
         """Replace {variable} placeholders in text"""
