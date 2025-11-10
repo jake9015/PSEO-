@@ -43,7 +43,7 @@ class StatisticsAgent(ResearchAgent):
         cache_key = f"stats_{pattern_id}_{audience}_{platform}"
 
         # Check cache first
-        cached_data = self.get_cached_research(cache_key)
+        cached_data = self.get_cached(cache_key)
         if cached_data:
             print(f"  ✓ Using cached statistics for {audience} on {platform}")
             execution_time = time.time() - start_time
