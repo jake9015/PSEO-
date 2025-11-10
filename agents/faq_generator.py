@@ -81,16 +81,20 @@ class FAQGeneratorAgent(BaseAgent):
 6. Be FACTUAL - don't hallucinate features or pricing
 
 **Sozee Key Facts to Reference:**
-- Custom LORA training: 30 minutes
-- Content generation: 30 seconds per photo/video
-- Hyper-realistic (trained on YOUR face/body)
-- SFW & NSFW content support
-- Built specifically for OnlyFans/creator platforms
-- Pricing: Creators $15/week, Agencies $33/week
-- Free trial available (no credit card required)
-- No technical skills required
-- 1-Click TikTok cloning
-- Solves the 1/100 content supply/demand crisis
+- **Setup:** Upload 3 photos minimum - instant likeness reconstruction, NO training required
+- **Content generation:** 30 seconds per photo/video
+- **Quality:** Hyper-realistic - indistinguishable from real photoshoots
+- **Privacy:** Your likeness is yours alone - isolated models never used for training other users
+- **Content type:** SFW & NSFW full support - complete creative freedom
+- **Platform focus:** Built specifically for OnlyFans/Fansly/FanVue creator platforms
+- **Pricing:** Creators $15/week, Agencies $33/week
+- **Free trial:** Available (no credit card required)
+- **Technical skills:** None required - instant setup
+- **Special features:** 1-Click TikTok cloning, instant fan request fulfillment
+- **The Content Crisis:** Solves the 100:1 demand ratio - 3 photos → infinite content forever
+- **Volume:** Unlimited content generation from just 3 photos
+- **Consistency:** Perfect likeness consistency across all generated content
+- **Agency features:** Team access, approval workflows, multi-creator support
 
 **Output as JSON array:**
 [
@@ -125,19 +129,19 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
             fallback_faqs = [
                 {
                     "question": "What is Sozee?",
-                    "answer": "Sozee is an AI-powered content generation platform built specifically for creators. It offers custom LORA training, 1-click TikTok cloning, and both SFW and NSFW content capabilities."
+                    "answer": "Sozee is the AI Content Studio for the creator economy. Upload just 3 photos and instantly generate unlimited hyper-realistic photos and videos. Built specifically for OnlyFans, Fansly, and FanVue creators."
+                },
+                {
+                    "question": "How many photos do I need to upload?",
+                    "answer": "Just 3 photos minimum. Sozee instantly reconstructs your likeness with hyper-realistic accuracy - no training, no waiting, no technical setup required."
                 },
                 {
                     "question": "Does Sozee offer a free trial?",
-                    "answer": "Yes, Sozee offers a free trial with no credit card required. You can test all features including custom AI model training and content generation before committing to a paid plan."
-                },
-                {
-                    "question": "How long does LORA training take?",
-                    "answer": "Sozee's custom LORA training takes approximately 30 minutes. This allows you to create a personalized AI model that generates content matching your unique style and brand."
+                    "answer": "Yes, Sozee offers a free trial with no credit card required. Test the instant 3-photo setup and unlimited content generation before committing to a paid plan."
                 },
                 {
                     "question": "How realistic is Sozee-generated content?",
-                    "answer": "Sozee generates hyper-realistic content by training a custom AI model on your specific photos. The results maintain your unique features, body type, and style for authentic-looking content."
+                    "answer": "Sozee generates hyper-realistic content that's indistinguishable from real photoshoots. From just 3 photos, you get perfect likeness consistency across unlimited content - not \"AI art,\" but professional-grade realism."
                 },
                 {
                     "question": "Does Sozee support NSFW content?",
@@ -145,19 +149,23 @@ Return ONLY valid JSON array with exactly {count} Q&A pairs."""
                 },
                 {
                     "question": "How much does Sozee cost?",
-                    "answer": "Sozee offers two pricing tiers: Creators plan at $15/week and Agencies plan at $33/week. Both include unlimited content generation, custom LORA training, and all features."
+                    "answer": "Sozee offers two pricing tiers: Creators plan at $15/week and Agencies plan at $33/week. Both include unlimited content generation from just 3 photos, with instant setup and all features."
                 },
                 {
                     "question": "Do I need technical skills to use Sozee?",
-                    "answer": "No technical skills are required. Sozee is designed for creators, not developers. Simply upload photos, let the AI train, and start generating content with one click."
+                    "answer": "No technical skills required. Upload 3 photos and start generating instantly - no training, no setup, no waiting. Built for creators, not developers."
                 },
                 {
                     "question": "How fast can I generate content with Sozee?",
-                    "answer": "After your initial 30-minute LORA training, you can generate new photos and videos in approximately 30 seconds each. This allows for rapid, high-volume content creation."
+                    "answer": "Instant setup with just 3 photos. Then generate new photos and videos in approximately 30 seconds each. No training time, no delays - start creating content immediately."
                 },
                 {
-                    "question": "What is the 1/100 content crisis?",
-                    "answer": "The 1/100 ratio represents the gap between content supply and demand. Fans want 100 pieces of new content, but creators can typically produce only 1 using traditional methods. Sozee solves this by enabling unlimited content generation."
+                    "question": "What is the Content Crisis?",
+                    "answer": "The Content Crisis is the 100:1 demand ratio - fans want 100 pieces of content, creators can produce 1. This gap causes burnout and business failure. Sozee solves it: 3 photos → infinite content forever."
+                },
+                {
+                    "question": "Is my likeness private on Sozee?",
+                    "answer": "Your likeness is yours alone. Sozee uses isolated AI models that are never used to train other users' models. Total privacy, total control - your face belongs only to you."
                 },
                 {
                     "question": "Can I use Sozee for multiple platforms?",
