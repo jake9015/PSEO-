@@ -114,10 +114,10 @@ class AudienceInsightAgent(ResearchAgent):
 
 **Context: Sozee AI Content Platform**
 - AI photo/video generation
-- LORA training in 30 minutes
+- 3 photos minimum - instant likeness reconstruction (no training, no waiting)
 - Built for OnlyFans creators
 - SFW & NSFW capabilities
-- Solves "content burnout" crisis
+- Solves the "100:1 content crisis" (fans want 100x more content than creators can produce)
 
 **Output as JSON:**
 {{
@@ -216,7 +216,7 @@ Return ONLY valid JSON. Be specific and actionable."""
                     {
                         "objection": "AI-generated content may look fake or low quality",
                         "severity": "significant",
-                        "response": "Sozee uses LORA training for hyper-realistic, personalized content"
+                        "response": "Sozee creates hyper-realistic content indistinguishable from real photos using instant likeness reconstruction from just 3 photos"
                     }
                 ],
                 "current_solutions": [

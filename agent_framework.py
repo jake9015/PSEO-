@@ -236,7 +236,12 @@ class PageOutput:
         if self.schema_markup is None:
             self.schema_markup = []
 
-    def to_dict(self):
+    def to_dict_public(self):
+        """
+        Export user-facing content only (excludes internal metadata).
+        Use this for CSV exports, API responses, and WordPress imports.
+        All content is keyword-relevant and SEO-optimized.
+        """
         return {
             'page_id': self.page_id,
             'pattern_id': self.pattern_id,
@@ -253,14 +258,48 @@ class PageOutput:
             'faq_json': self.faq_json,
             'final_cta': self.final_cta,
             'schema_markup': self.schema_markup,
+            'generated_at': self.generated_at
+        }
+
+    def to_dict(self):
+        """
+        Export complete data including internal metadata.
+        Use this for debugging, quality control, and analytics.
+        """
+        return {
+            'page_id': self.page_id,
+            'pattern_id': self.pattern_id,
+            'status': self.status,
+            'post_title': self.post_title,
+            'url_slug': self.url_slug,
+            'meta_title': self.meta_title,
+            'meta_description': self.meta_description,
+            'hero_section': self.hero_section,
+            'problem_agitation': self.problem_agitation,
+            'solution_overview': self.solution_overview,
+            'comparison_table_json': self.comparison_table_json,
+            'feature_sections': self.feature_sections,
+            'faq_json': self.faq_json,
+            'final_cta': self.final_cta,
+            'schema_markup': self.schema_markup,
+            'generated_at': self.generated_at,
+            # Internal metadata (for debugging/analytics only)
             'pseo_variables': self.pseo_variables,
             'research_sources': self.research_sources,
             'quality_score': self.quality_score,
             'uniqueness_check': self.uniqueness_check,
-            'generated_at': self.generated_at,
             'generation_model': self.generation_model,
             'agents_used': self.agents_used
         }
 
-    def to_json(self, indent=2):
+    def to_json(self, indent=2, public_only=False):
+        """
+        Convert to JSON string.
+
+        Args:
+            indent: JSON indentation level
+            public_only: If True, excludes internal metadata (default: False)
+        """
+        if public_only:
+            return json.dumps(self.to_dict_public(), indent=indent)
         return json.dumps(self.to_dict(), indent=indent)

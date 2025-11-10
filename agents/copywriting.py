@@ -271,11 +271,13 @@ Return ONLY valid JSON."""
 {self._format_research_data(research_data)}
 
 **SOZEE KEY FACTS:**
-- Custom LORA Training in 30 minutes (hyper-realistic, trained on YOUR face)
+- 3 photos minimum - instant likeness reconstruction (no training, no waiting)
+- Hyper-realistic AI content generation (indistinguishable from real photoshoots)
 - 1-Click TikTok Cloning (replicate viral content instantly)
 - Built specifically for OnlyFans/creator platforms
 - SFW & NSFW capabilities (complete flexibility)
-- Solves the "1/100 content crisis" (1 photoshoot → 10,000+ photos)
+- Solves the "100:1 content crisis" (fans want 100x more content than creators can produce)
+- Total privacy - your likeness is yours alone, isolated models never used for training
 - No technical skills required
 - Pricing: Creators $15/week, Agencies $33/week
 
@@ -386,7 +388,7 @@ Return ONLY valid JSON matching this structure."""
         use_case = variables.get('use_case', '')
 
         angles = {
-            '1': f"COMPARISON ANGLE: Emphasize how Sozee differs from {competitor}. Show side-by-side feature comparison. Highlight Sozee's creator-specific advantages (LORA training, NSFW support, OnlyFans optimization).",
+            '1': f"COMPARISON ANGLE: Emphasize how Sozee differs from {competitor}. Show side-by-side feature comparison. Highlight Sozee's creator-specific advantages (instant setup with 3 photos, hyper-realistic output, NSFW support, OnlyFans optimization, total privacy).",
             '2': f"BEST TOOL ANGLE: Position Sozee as the #1 ranked {use_case} for {audience}. Support with specific advantages. Use authoritative language ('the best', 'top-rated', 'recommended').",
             '3': f"DIRECT TOOL ANGLE: Explain exactly what Sozee does and why it's perfect for {audience}. Focus on specific use case benefits. Be clear and benefit-focused.",
             '4': f"ALTERNATIVE ANGLE: Explain why {audience} are switching from {competitor} to Sozee. Address {competitor}'s limitations directly. Position Sozee as the better choice.",
@@ -415,9 +417,10 @@ Return ONLY valid JSON matching this structure."""
         """Return comparison table instruction based on pattern"""
         if pattern_id in ['1', '4']:  # Comparison, Alternative
             return '''[
-    {"feature": "LORA Training", "sozee": "30 minutes, custom", "competitor": "Use competitor data"},
+    {"feature": "Setup Time", "sozee": "3 photos, instant setup", "competitor": "Use competitor data"},
     {"feature": "NSFW Support", "sozee": "Full support", "competitor": "Use competitor data"},
-    {"feature": "Creator Focus", "sozee": "Built for OnlyFans", "competitor": "Use competitor data"}
+    {"feature": "Creator Focus", "sozee": "Built for OnlyFans", "competitor": "Use competitor data"},
+    {"feature": "Privacy", "sozee": "Your likeness is yours alone", "competitor": "Use competitor data"}
   ]'''
         else:
             return '[]'

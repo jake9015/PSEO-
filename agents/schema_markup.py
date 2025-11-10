@@ -101,7 +101,7 @@ class SchemaMarkupAgent(BaseAgent):
             "name": "Sozee",
             "url": "https://sozee.ai",
             "logo": "https://sozee.ai/logo.png",
-            "description": "AI-powered content generation platform built specifically for creators. Custom LORA training, 1-click TikTok cloning, and complete SFW/NSFW support.",
+            "description": "AI-powered content generation platform built specifically for creators. 3 photos for instant likeness reconstruction, 1-click TikTok cloning, and complete SFW/NSFW support.",
             "sameAs": [
                 "https://twitter.com/sozee_ai",
                 "https://www.linkedin.com/company/sozee-ai"
@@ -164,7 +164,7 @@ class SchemaMarkupAgent(BaseAgent):
             "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sozee AI Content Studio",
-            "description": "AI-powered content generation platform with custom LORA training, 1-click TikTok cloning, and NSFW support built for creators.",
+            "description": "AI-powered content generation platform with instant setup (3 photos), 1-click TikTok cloning, and NSFW support built for creators.",
             "brand": {
                 "@type": "Brand",
                 "name": "Sozee"
@@ -226,12 +226,12 @@ class SchemaMarkupAgent(BaseAgent):
                 "bestRating": "5"
             },
             "featureList": [
-                "Custom LORA training in 30 minutes",
+                "3 photos for instant likeness reconstruction",
                 "1-click TikTok cloning",
                 "SFW and NSFW content support",
-                "Hyper-realistic AI generation",
+                "Hyper-realistic AI generation (indistinguishable from real photos)",
                 "Built for OnlyFans and creator platforms",
-                "30-second content generation"
+                "Total privacy - your likeness is yours alone"
             ]
         }
 

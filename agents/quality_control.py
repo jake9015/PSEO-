@@ -200,10 +200,10 @@ class QualityControlAgent(BaseAgent):
             errors.append("Content missing 'Sozee' brand mention")
             score -= 0.3
 
-        # Check for key value props
-        value_props = ['LORA', 'training', 'AI', 'content']
+        # Check for key value props aligned with Sozee Manifesto
+        value_props = ['instant', 'photos', 'hyper-realistic', 'AI', 'content', 'creator']
         missing_props = [prop for prop in value_props if prop.lower() not in text_content.lower()]
-        if len(missing_props) > 2:
+        if len(missing_props) > 3:
             warnings.append(f"Missing key value propositions: {', '.join(missing_props)}")
             score -= 0.1
 

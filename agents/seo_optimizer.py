@@ -162,7 +162,7 @@ Description: "Professional {platform} {use_case}. Generate unlimited hyper-reali
 Title: "{competitor} Alternative for {audience} | Sozee"
        (Example length: ~50-55 chars)
 
-Description: "Looking for a {competitor} alternative? {audience} are switching to Sozee for custom LORA training and NSFW support. Compare features now."
+Description: "Looking for a {competitor} alternative? {audience} are switching to Sozee for instant setup (3 photos), hyper-realistic content, and NSFW support. Compare features now."
              (Target: 150-160 chars - emphasize switching benefits)""",
 
             '5': f"""REVIEW Pattern Examples:
@@ -176,7 +176,7 @@ Description: "Honest Sozee review for {audience}. Pros, cons, pricing, and featu
 Title: "Content Crisis Solution for {platform} {audience} | Sozee"
        (Example length: ~55-60 chars)
 
-Description: "Solve the content crisis for {platform} {audience}. Generate unlimited AI content and scale without creator burnout. See how Sozee solves 1/100 problem."
+Description: "Solve the content crisis for {platform} {audience}. Generate unlimited AI content and scale without creator burnout. See how Sozee solves 100:1 demand."
              (Target: 150-160 chars - emphasize problem + solution)"""
         }
 
