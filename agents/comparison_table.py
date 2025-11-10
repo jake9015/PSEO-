@@ -155,69 +155,103 @@ Prioritize features where Sozee has clear advantages for {audience}."""
             return self._get_fallback_comparison_table(competitor)
 
     def _get_sozee_features(self) -> dict:
-        """Return Sozee's actual features (factual data only)"""
+        """Return Sozee's actual features from manifesto (factual data only)"""
         return {
-            "lora_training": {
-                "time": "30 minutes",
-                "customization": "Fully custom - trained on YOUR face/body",
-                "hyper_realistic": True
+            "setup": {
+                "photos_required": "3 photos minimum",
+                "training_time": "Instant (no training required)",
+                "setup_time": "Immediate - no waiting",
+                "technical_skills": "None required"
+            },
+            "output_quality": {
+                "realism": "Hyper-realistic (indistinguishable from real photoshoots)",
+                "consistency": "Perfect likeness consistency across unlimited content",
+                "quality_level": "Professional-grade, not 'AI art'"
             },
             "content_support": {
                 "sfw": True,
                 "nsfw": True,
-                "flexibility": "Complete content freedom"
+                "flexibility": "Complete creative freedom, no censorship",
+                "content_types": "Photos & videos"
+            },
+            "privacy": {
+                "model_isolation": "Your likeness is yours alone",
+                "training_data_use": "Never used to train other users' models",
+                "control": "Total privacy, total control"
             },
             "platform_focus": {
-                "primary": "OnlyFans & creator platforms",
-                "creator_built": True,
-                "agency_support": True
+                "primary": "OnlyFans, Fansly, FanVue",
+                "also_supports": "TikTok, Instagram, X",
+                "creator_first": True,
+                "monetization_workflows": True
             },
             "generation_speed": {
-                "photo": "30 seconds",
-                "video": "30 seconds",
-                "batch": "Generate unlimited content"
-            },
-            "ease_of_use": {
-                "technical_skills": "None required",
-                "setup": "Simple 3-step process",
-                "ui": "Creator-friendly interface"
+                "photo": "30 seconds per photo",
+                "video": "30 seconds per video",
+                "volume": "Unlimited content from 3 photos"
             },
             "pricing": {
                 "creators": "$15/week",
                 "agencies": "$33/week",
                 "free_trial": "Yes (no credit card required)"
             },
+            "agency_features": {
+                "team_access": True,
+                "approval_workflows": True,
+                "multi_creator_support": True,
+                "scheduling": "Built-in"
+            },
             "special_features": {
                 "tiktok_cloning": "1-click TikTok clone",
-                "content_crisis_solution": "1 photoshoot → 10,000+ photos",
-                "supply_demand": "Solves 1/100 content crisis"
+                "content_crisis_solution": "Solves 100:1 demand ratio",
+                "infinite_content": "3 photos → infinite content forever",
+                "fan_requests": "Instant custom request fulfillment",
+                "prompt_libraries": "Reusable prompts and style bundles"
             },
-            "output_quality": {
-                "realism": "Hyper-realistic",
-                "trained_on_you": True,
-                "brand_consistency": "Perfect brand match"
+            "positioning": {
+                "focus": "Monetization-first design (not AI art)",
+                "purpose": "Built for creator businesses",
+                "category": "AI Content Studio for creator economy"
             }
         }
 
     def _get_fallback_comparison_table(self, competitor: str) -> list:
-        """Fallback comparison table with factual Sozee data"""
+        """Fallback comparison table with factual Sozee data from manifesto"""
         return [
             {
-                "feature": "LORA Training Time",
-                "sozee": "30 minutes",
+                "feature": "Setup Time",
+                "sozee": "Instant (3 photos, no training)",
+                "competitor": "Not specified",
+                "sozee_advantage": True
+            },
+            {
+                "feature": "Photos Required",
+                "sozee": "3 photos minimum",
+                "competitor": "Not specified",
+                "sozee_advantage": True
+            },
+            {
+                "feature": "Output Quality",
+                "sozee": "Hyper-realistic (indistinguishable from real)",
                 "competitor": "Not specified",
                 "sozee_advantage": True
             },
             {
                 "feature": "NSFW Content Support",
-                "sozee": "Full support",
+                "sozee": "Full support (no censorship)",
                 "competitor": "Not specified",
                 "sozee_advantage": True
             },
             {
                 "feature": "Built For",
-                "sozee": "OnlyFans & creator platforms",
+                "sozee": "OnlyFans/Fansly/FanVue creators",
                 "competitor": "General use",
+                "sozee_advantage": True
+            },
+            {
+                "feature": "Privacy",
+                "sozee": "Your likeness is yours alone (isolated models)",
+                "competitor": "Not specified",
                 "sozee_advantage": True
             },
             {

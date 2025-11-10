@@ -105,15 +105,31 @@ For this pattern, emphasize:
 {self._get_pattern_emphasis(blueprint.get('pattern_id'), variables)}
 
 **SOZEE KEY DIFFERENTIATORS:**
-- Custom LORA Training in 30 minutes (hyper-realistic, trained on YOUR face)
+- **3 PHOTOS MINIMUM** - Instant likeness reconstruction, no training, no waiting
+- **THE CONTENT CRISIS SOLUTION** - Solves the 100:1 demand ratio (fans want 100x more content)
+- **HYPER-REALISTIC** - Indistinguishable from real photoshoots, not "AI art"
+- **TOTAL PRIVACY** - Your likeness is yours alone, isolated models never used for training
+- **INFINITE CONTENT ENGINE** - 3 photos → unlimited photos/videos forever
+- **MONETIZATION-FIRST DESIGN** - Built for creator businesses, not AI art hobbyists
+- **SFW & NSFW CAPABILITIES** - Complete creative freedom, no censorship
+- **AGENCY WORKFLOWS** - Team access, approval flows, multi-creator support
 - 1-Click TikTok Cloning (replicate viral content instantly)
-- Built specifically for OnlyFans/creator platforms
-- SFW & NSFW capabilities (complete flexibility)
-- Solves the "1/100 content crisis" (1 photoshoot → 10,000+ photos)
+- Built specifically for OnlyFans/Fansly/FanVue creator platforms
 - No technical skills required
+- Instant custom fan request fulfillment
+
+**THE CONTENT CRISIS (Core Problem Framework):**
+Traditional creator economy: Fans demand 100 pieces of content, creators can produce 1.
+This 100:1 ratio creates burnout, unstable revenue, and business failure.
+Sozee breaks the link between physical availability and content production.
+- Traditional: 1 photoshoot → 10-20 photos
+- Sozee: 3 photos → infinite content forever
+- Result: Creators scale without burnout, agencies never run out, virtual influencers stay consistent
 
 **BRAND VOICE:**
-Confident yet empathetic, slightly edgy. Speak directly to creator burnout and the content supply crisis. Use "you" language. Be specific with numbers (30 minutes, 1/100 ratio, etc.)
+Direct, confident, slightly edgy. Speak to the Content Crisis and creator burnout.
+Use "you" language. Be specific with numbers (3 photos, 100:1 ratio, infinite content).
+Phrases to use: "The Content Crisis", "We multiply creators, not replace them", "Content that never dries up", "Your likeness is yours alone"
 
 **WRITING GUIDELINES:**
 - Keep paragraphs SHORT (2-4 sentences max)
