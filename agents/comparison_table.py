@@ -28,6 +28,20 @@ class ComparisonTableAgent(BaseAgent):
         else:
             self.genai_model = genai.GenerativeModel('gemini-2.0-flash-exp')
 
+        # Load competitor knowledge base
+        self.competitor_profiles = self._load_competitor_profiles()
+
+    def _load_competitor_profiles(self) -> dict:
+        """Load competitor knowledge base from config"""
+        config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'competitor_profiles.json')
+        try:
+            with open(config_path, 'r') as f:
+                data = json.load(f)
+                return data.get('competitors', {})
+        except Exception as e:
+            print(f"  ⚠️ Could not load competitor profiles: {e}")
+            return {}
+
     def execute(self, message: AgentMessage) -> AgentResponse:
         """Generate comparison table for patterns 1 & 4"""
         start_time = time.time()
@@ -67,8 +81,14 @@ class ComparisonTableAgent(BaseAgent):
         # Get Sozee's known features (factual data)
         sozee_features = self._get_sozee_features()
 
+        # Get competitor profile from knowledge base
+        competitor_profile = self.competitor_profiles.get(competitor, {})
+
+        # Merge research data with knowledge base (research takes priority)
+        merged_competitor_info = self._merge_competitor_data(competitor_profile, competitor_data)
+
         # Format competitor data for prompt
-        competitor_info = json.dumps(competitor_data, indent=2) if competitor_data else "No competitor data available"
+        competitor_info = json.dumps(merged_competitor_info, indent=2) if merged_competitor_info else "Using category-level comparison"
 
         prompt = f"""You are creating a feature comparison table for a landing page comparing Sozee vs {competitor}.
 
@@ -79,8 +99,10 @@ class ComparisonTableAgent(BaseAgent):
 **SOZEE'S ACTUAL FEATURES** (use these EXACT values):
 {json.dumps(sozee_features, indent=2)}
 
-**COMPETITOR RESEARCH DATA** (use this to fill competitor column):
+**COMPETITOR DATA** (research + knowledge base):
 {competitor_info}
+
+**IMPORTANT**: This data combines AI research with our competitor knowledge base. Use specific values where available. Avoid "Not specified" - use category-level comparisons instead (e.g., "Requires training" instead of "Not specified").
 
 **Your Task**: Create a comparison table with 6-8 key features that matter most to {audience}.
 
@@ -99,10 +121,11 @@ class ComparisonTableAgent(BaseAgent):
    - Special Features (1-click TikTok cloning, etc.)
 
 5. **For competitor data**:
-   - Use research data if available
-   - If feature not mentioned, use "Not specified" or "Unknown"
-   - If competitor lacks feature, use "Not available" or "No"
-   - DO NOT hallucinate competitor features
+   - Use specific values from research/knowledge base
+   - If competitor lacks a feature, state it clearly: "No NSFW support" not "Not available"
+   - Use category comparisons: "Requires training" not "Not specified"
+   - For unknown pricing: "Varies" or estimate range
+   - NEVER say "Not specified" - use knowledge base data or reasonable category inference
 
 6. **Format for comparison**:
    - Highlight Sozee's creator-specific advantages
@@ -154,6 +177,23 @@ Prioritize features where Sozee has clear advantages for {audience}."""
             print(f"  ⚠️ Error generating comparison table: {e}")
             # Return fallback comparison table with factual Sozee data
             return self._get_fallback_comparison_table(competitor)
+
+    def _merge_competitor_data(self, knowledge_base_profile: dict, research_data: dict) -> dict:
+        """Merge knowledge base profile with research data (research takes priority)"""
+        if not knowledge_base_profile and not research_data:
+            return {}
+
+        # Start with knowledge base as foundation
+        merged = knowledge_base_profile.copy() if knowledge_base_profile else {}
+
+        # Override with research data where available
+        if research_data:
+            # Research data should take priority for accuracy
+            for key, value in research_data.items():
+                if value:  # Only override if research has actual data
+                    merged[key] = value
+
+        return merged
 
     def _get_sozee_features(self) -> dict:
         """Return Sozee's actual features from manifesto (factual data only)"""
@@ -217,60 +257,72 @@ Prioritize features where Sozee has clear advantages for {audience}."""
         }
 
     def _get_fallback_comparison_table(self, competitor: str) -> list:
-        """Fallback comparison table with factual Sozee data from manifesto"""
+        """Fallback comparison table using knowledge base data"""
+
+        # Try to get competitor profile from knowledge base
+        profile = self.competitor_profiles.get(competitor, {})
+
+        # Extract competitor features or use category-level fallbacks
+        setup_info = profile.get('setup', {})
+        features = profile.get('features', {})
+        pricing = profile.get('pricing', {})
+
+        comp_training = setup_info.get('training_time', 'Requires model training')
+        comp_photos = setup_info.get('photos_required', 'Multiple training images required')
+        comp_nsfw = "Yes" if features.get('nsfw_support') else "No NSFW support"
+        comp_focus = features.get('platform_focus', 'General purpose')
+        comp_quality = features.get('hyper_realistic', 'AI-generated aesthetic')
+        comp_privacy = features.get('privacy_model', 'Standard cloud storage')
+        comp_skills = setup_info.get('technical_skills', 'Moderate technical knowledge')
+        comp_pricing = pricing.get('estimate', 'Varies by plan')
+
         return [
             {
                 "feature": "Setup Time",
                 "sozee": "Instant (3 photos, no training)",
-                "competitor": "Not specified",
+                "competitor": comp_training,
                 "sozee_advantage": True
             },
             {
                 "feature": "Photos Required",
                 "sozee": "3 photos minimum",
-                "competitor": "Not specified",
+                "competitor": comp_photos,
                 "sozee_advantage": True
             },
             {
                 "feature": "Output Quality",
                 "sozee": "Hyper-realistic (indistinguishable from real)",
-                "competitor": "Not specified",
+                "competitor": comp_quality,
                 "sozee_advantage": True
             },
             {
                 "feature": "NSFW Content Support",
                 "sozee": "Full support (no censorship)",
-                "competitor": "Not specified",
-                "sozee_advantage": True
+                "competitor": comp_nsfw,
+                "sozee_advantage": "No" in comp_nsfw
             },
             {
                 "feature": "Built For",
                 "sozee": "OnlyFans/Fansly/FanVue creators",
-                "competitor": "General use",
+                "competitor": comp_focus,
                 "sozee_advantage": True
             },
             {
                 "feature": "Privacy",
                 "sozee": "Your likeness is yours alone (isolated models)",
-                "competitor": "Not specified",
+                "competitor": comp_privacy,
                 "sozee_advantage": True
             },
             {
                 "feature": "Technical Skills Required",
                 "sozee": "None",
-                "competitor": "Not specified",
-                "sozee_advantage": True
-            },
-            {
-                "feature": "Content Generation Speed",
-                "sozee": "30 seconds per photo/video",
-                "competitor": "Not specified",
-                "sozee_advantage": True
+                "competitor": comp_skills,
+                "sozee_advantage": "None" not in comp_skills
             },
             {
                 "feature": "Pricing (Creators)",
                 "sozee": "$15/week",
-                "competitor": "Not specified",
+                "competitor": comp_pricing,
                 "sozee_advantage": False
             }
         ]
