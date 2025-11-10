@@ -14,7 +14,10 @@
         "creator_focus": false,
         "platform_focus": "General social media (TikTok, Instagram)",
         "privacy_model": "Standard cloud storage",
-        "content_types": ["Video", "Images"],
+        "content_types": [
+          "Video",
+          "Images"
+        ],
         "hyper_realistic": "Good quality, AI-style aesthetic"
       },
       "pricing": {
@@ -22,8 +25,15 @@
         "estimate": "$20-50/month",
         "free_trial": true
       },
-      "strengths": ["Video generation", "Social media optimization"],
-      "weaknesses": ["No NSFW support", "Not creator-focused", "Training required"]
+      "strengths": [
+        "Video generation",
+        "Social media optimization"
+      ],
+      "weaknesses": [
+        "No NSFW support",
+        "Not creator-focused",
+        "Training required"
+      ]
     },
     "Krea": {
       "category": "AI Image Generator",
@@ -39,7 +49,10 @@
         "creator_focus": false,
         "platform_focus": "General purpose art generation",
         "privacy_model": "Public gallery, optional private",
-        "content_types": ["Images", "AI Art"],
+        "content_types": [
+          "Images",
+          "AI Art"
+        ],
         "hyper_realistic": "Artistic style, less photorealistic"
       },
       "pricing": {
@@ -47,8 +60,15 @@
         "estimate": "$24/month",
         "free_trial": true
       },
-      "strengths": ["Real-time generation", "Creative controls"],
-      "weaknesses": ["AI art aesthetic", "Not creator-focused", "Limited NSFW"]
+      "strengths": [
+        "Real-time generation",
+        "Creative controls"
+      ],
+      "weaknesses": [
+        "AI art aesthetic",
+        "Not creator-focused",
+        "Limited NSFW"
+      ]
     },
     "Midjourney": {
       "category": "AI Art Generator",
@@ -64,7 +84,10 @@
         "creator_focus": false,
         "platform_focus": "General art and design",
         "privacy_model": "Public by default, paid for private",
-        "content_types": ["AI Art", "Illustrations"],
+        "content_types": [
+          "AI Art",
+          "Illustrations"
+        ],
         "hyper_realistic": "Artistic, not photorealistic"
       },
       "pricing": {
@@ -72,8 +95,16 @@
         "estimate": "$10-60/month",
         "free_trial": false
       },
-      "strengths": ["Artistic quality", "Large community"],
-      "weaknesses": ["No NSFW", "Not photorealistic", "No likeness training", "Public gallery"]
+      "strengths": [
+        "Artistic quality",
+        "Large community"
+      ],
+      "weaknesses": [
+        "No NSFW",
+        "Not photorealistic",
+        "No likeness training",
+        "Public gallery"
+      ]
     },
     "Stability AI": {
       "category": "AI Platform (Stable Diffusion)",
@@ -89,7 +120,10 @@
         "creator_focus": false,
         "platform_focus": "Developer platform",
         "privacy_model": "Self-hosted or cloud options",
-        "content_types": ["Images", "Various AI models"],
+        "content_types": [
+          "Images",
+          "Various AI models"
+        ],
         "hyper_realistic": "Varies by model"
       },
       "pricing": {
@@ -97,8 +131,15 @@
         "estimate": "Free (open source) to $9-99/month (API)",
         "free_trial": true
       },
-      "strengths": ["Open source", "Customizable"],
-      "weaknesses": ["Requires technical expertise", "Complex setup", "Not user-friendly"]
+      "strengths": [
+        "Open source",
+        "Customizable"
+      ],
+      "weaknesses": [
+        "Requires technical expertise",
+        "Complex setup",
+        "Not user-friendly"
+      ]
     },
     "Runway": {
       "category": "AI Video & Image Platform",
@@ -114,7 +155,11 @@
         "creator_focus": false,
         "platform_focus": "Video production and editing",
         "privacy_model": "Private projects",
-        "content_types": ["Video", "Images", "Editing tools"],
+        "content_types": [
+          "Video",
+          "Images",
+          "Editing tools"
+        ],
         "hyper_realistic": "Professional quality"
       },
       "pricing": {
@@ -122,8 +167,15 @@
         "estimate": "$12-76/month",
         "free_trial": true
       },
-      "strengths": ["Video tools", "Professional features"],
-      "weaknesses": ["Not creator-focused", "No NSFW", "Expensive"]
+      "strengths": [
+        "Video tools",
+        "Professional features"
+      ],
+      "weaknesses": [
+        "Not creator-focused",
+        "No NSFW",
+        "Expensive"
+      ]
     },
     "Leonardo AI": {
       "category": "AI Image Generator",
@@ -139,7 +191,10 @@
         "creator_focus": false,
         "platform_focus": "Game assets, general design",
         "privacy_model": "Public gallery",
-        "content_types": ["Images", "Game assets"],
+        "content_types": [
+          "Images",
+          "Game assets"
+        ],
         "hyper_realistic": "Good quality, artistic lean"
       },
       "pricing": {
@@ -147,8 +202,15 @@
         "estimate": "$10-48/month",
         "free_trial": true
       },
-      "strengths": ["Asset generation", "Style variety"],
-      "weaknesses": ["Not creator-focused", "Limited NSFW", "Public gallery"]
+      "strengths": [
+        "Asset generation",
+        "Style variety"
+      ],
+      "weaknesses": [
+        "Not creator-focused",
+        "Limited NSFW",
+        "Public gallery"
+      ]
     },
     "Civitai": {
       "category": "AI Model Sharing Platform",
@@ -164,7 +226,9 @@
         "creator_focus": false,
         "platform_focus": "Model sharing, not generation platform",
         "privacy_model": "Public models, self-hosted generation",
-        "content_types": ["Various - depends on models"],
+        "content_types": [
+          "Various - depends on models"
+        ],
         "hyper_realistic": "Varies by model"
       },
       "pricing": {
@@ -172,8 +236,16 @@
         "estimate": "Free (model downloads) + compute costs",
         "free_trial": true
       },
-      "strengths": ["NSFW support", "Model variety", "Community"],
-      "weaknesses": ["Requires technical setup", "Not beginner-friendly", "No built-in generation"]
+      "strengths": [
+        "NSFW support",
+        "Model variety",
+        "Community"
+      ],
+      "weaknesses": [
+        "Requires technical setup",
+        "Not beginner-friendly",
+        "No built-in generation"
+      ]
     },
     "Pykaso": {
       "category": "AI Portrait & Avatar Generator",
@@ -189,7 +261,11 @@
         "creator_focus": false,
         "platform_focus": "Personal avatars, social media",
         "privacy_model": "Private models",
-        "content_types": ["Portraits", "Avatars", "Stylized images"],
+        "content_types": [
+          "Portraits",
+          "Avatars",
+          "Stylized images"
+        ],
         "hyper_realistic": "Stylized, not photorealistic"
       },
       "pricing": {
@@ -197,8 +273,16 @@
         "estimate": "$29 one-time",
         "free_trial": false
       },
-      "strengths": ["Easy to use", "Personal avatars"],
-      "weaknesses": ["No NSFW", "Not creator-focused", "Stylized only", "Long training time"]
+      "strengths": [
+        "Easy to use",
+        "Personal avatars"
+      ],
+      "weaknesses": [
+        "No NSFW",
+        "Not creator-focused",
+        "Stylized only",
+        "Long training time"
+      ]
     },
     "Foxy AI": {
       "category": "AI Content Generator for Creators",
@@ -214,7 +298,9 @@
         "creator_focus": true,
         "platform_focus": "OnlyFans, adult platforms",
         "privacy_model": "Private models",
-        "content_types": ["Images"],
+        "content_types": [
+          "Images"
+        ],
         "hyper_realistic": "Good quality"
       },
       "pricing": {
@@ -222,8 +308,16 @@
         "estimate": "$30-50/month",
         "free_trial": false
       },
-      "strengths": ["NSFW support", "Creator-focused", "OnlyFans integration"],
-      "weaknesses": ["Requires training", "No instant setup", "Limited to images"]
+      "strengths": [
+        "NSFW support",
+        "Creator-focused",
+        "OnlyFans integration"
+      ],
+      "weaknesses": [
+        "Requires training",
+        "No instant setup",
+        "Limited to images"
+      ]
     },
     "PhotoAI": {
       "category": "AI Photo Generator",
@@ -239,7 +333,10 @@
         "creator_focus": false,
         "platform_focus": "Personal photography",
         "privacy_model": "Private models",
-        "content_types": ["Photos", "Portraits"],
+        "content_types": [
+          "Photos",
+          "Portraits"
+        ],
         "hyper_realistic": "Photorealistic"
       },
       "pricing": {
@@ -247,8 +344,15 @@
         "estimate": "$29/month",
         "free_trial": true
       },
-      "strengths": ["Photorealistic", "Easy to use"],
-      "weaknesses": ["Long training time", "Not creator-focused", "Limited NSFW"]
+      "strengths": [
+        "Photorealistic",
+        "Easy to use"
+      ],
+      "weaknesses": [
+        "Long training time",
+        "Not creator-focused",
+        "Limited NSFW"
+      ]
     },
     "Fooocus": {
       "category": "Stable Diffusion Interface",
@@ -264,7 +368,9 @@
         "creator_focus": false,
         "platform_focus": "General AI image generation",
         "privacy_model": "Local/self-hosted",
-        "content_types": ["Images"],
+        "content_types": [
+          "Images"
+        ],
         "hyper_realistic": "Varies by model"
       },
       "pricing": {
@@ -272,8 +378,16 @@
         "estimate": "Free (open source) + compute costs",
         "free_trial": true
       },
-      "strengths": ["Free", "Open source", "Privacy"],
-      "weaknesses": ["Requires technical setup", "No cloud option", "Not user-friendly"]
+      "strengths": [
+        "Free",
+        "Open source",
+        "Privacy"
+      ],
+      "weaknesses": [
+        "Requires technical setup",
+        "No cloud option",
+        "Not user-friendly"
+      ]
     },
     "InvokeAI": {
       "category": "Stable Diffusion Platform",
@@ -289,7 +403,9 @@
         "creator_focus": false,
         "platform_focus": "Advanced AI generation",
         "privacy_model": "Local/self-hosted",
-        "content_types": ["Images"],
+        "content_types": [
+          "Images"
+        ],
         "hyper_realistic": "Varies"
       },
       "pricing": {
@@ -297,8 +413,16 @@
         "estimate": "Free (open source)",
         "free_trial": true
       },
-      "strengths": ["Free", "Advanced features", "Local privacy"],
-      "weaknesses": ["Very technical", "Complex setup", "Steep learning curve"]
+      "strengths": [
+        "Free",
+        "Advanced features",
+        "Local privacy"
+      ],
+      "weaknesses": [
+        "Very technical",
+        "Complex setup",
+        "Steep learning curve"
+      ]
     },
     "ComfyUI": {
       "category": "Node-Based AI Interface",
@@ -314,7 +438,10 @@
         "creator_focus": false,
         "platform_focus": "Professional AI workflows",
         "privacy_model": "Local/self-hosted",
-        "content_types": ["Images", "Complex workflows"],
+        "content_types": [
+          "Images",
+          "Complex workflows"
+        ],
         "hyper_realistic": "Varies by setup"
       },
       "pricing": {
@@ -322,8 +449,16 @@
         "estimate": "Free (open source)",
         "free_trial": true
       },
-      "strengths": ["Extremely powerful", "Custom workflows", "Free"],
-      "weaknesses": ["Extremely technical", "Not beginner-friendly", "Steep learning curve"]
+      "strengths": [
+        "Extremely powerful",
+        "Custom workflows",
+        "Free"
+      ],
+      "weaknesses": [
+        "Extremely technical",
+        "Not beginner-friendly",
+        "Steep learning curve"
+      ]
     },
     "Automatic1111": {
       "category": "Stable Diffusion Web UI",
@@ -339,7 +474,9 @@
         "creator_focus": false,
         "platform_focus": "General AI generation",
         "privacy_model": "Local/self-hosted",
-        "content_types": ["Images"],
+        "content_types": [
+          "Images"
+        ],
         "hyper_realistic": "Varies by model"
       },
       "pricing": {
@@ -347,8 +484,16 @@
         "estimate": "Free (open source)",
         "free_trial": true
       },
-      "strengths": ["Free", "Popular", "Extensible"],
-      "weaknesses": ["Requires installation", "Technical", "Not user-friendly"]
+      "strengths": [
+        "Free",
+        "Popular",
+        "Extensible"
+      ],
+      "weaknesses": [
+        "Requires installation",
+        "Technical",
+        "Not user-friendly"
+      ]
     },
     "Supercreator": {
       "category": "Video AI Platform",
@@ -364,7 +509,9 @@
         "creator_focus": "Partial - video creators",
         "platform_focus": "TikTok, Reels, Shorts",
         "privacy_model": "Cloud-based",
-        "content_types": ["Short videos"],
+        "content_types": [
+          "Short videos"
+        ],
         "hyper_realistic": "N/A - video focused"
       },
       "pricing": {
@@ -372,8 +519,15 @@
         "estimate": "$20-40/month",
         "free_trial": true
       },
-      "strengths": ["Video creation", "Social media focus"],
-      "weaknesses": ["No NSFW", "Not for OnlyFans", "Limited to video"]
+      "strengths": [
+        "Video creation",
+        "Social media focus"
+      ],
+      "weaknesses": [
+        "No NSFW",
+        "Not for OnlyFans",
+        "Limited to video"
+      ]
     },
     "Glambase": {
       "category": "Virtual Influencer Platform",
@@ -389,7 +543,10 @@
         "creator_focus": "Virtual influencers",
         "platform_focus": "Social media influencers",
         "privacy_model": "Cloud-based",
-        "content_types": ["AI characters", "Social posts"],
+        "content_types": [
+          "AI characters",
+          "Social posts"
+        ],
         "hyper_realistic": "Character-based"
       },
       "pricing": {
@@ -397,8 +554,14 @@
         "estimate": "$30-100/month",
         "free_trial": false
       },
-      "strengths": ["Virtual influencer focus", "Character management"],
-      "weaknesses": ["Not for real creator content", "Limited use case"]
+      "strengths": [
+        "Virtual influencer focus",
+        "Character management"
+      ],
+      "weaknesses": [
+        "Not for real creator content",
+        "Limited use case"
+      ]
     },
     "DeepMode": {
       "category": "AI Face Swap & Avatar",
@@ -414,7 +577,10 @@
         "creator_focus": false,
         "platform_focus": "Consumer entertainment",
         "privacy_model": "Cloud-based",
-        "content_types": ["Face swaps", "Avatars"],
+        "content_types": [
+          "Face swaps",
+          "Avatars"
+        ],
         "hyper_realistic": "Fun/casual quality"
       },
       "pricing": {
@@ -422,14 +588,22 @@
         "estimate": "$10-20/month",
         "free_trial": true
       },
-      "strengths": ["Easy to use", "Quick results"],
-      "weaknesses": ["Not professional", "No NSFW", "Limited features", "Casual quality"]
+      "strengths": [
+        "Easy to use",
+        "Quick results"
+      ],
+      "weaknesses": [
+        "Not professional",
+        "No NSFW",
+        "Limited features",
+        "Casual quality"
+      ]
     }
   },
   "metadata": {
     "version": "1.0",
-    "last_updated": "2025-11-10",
-    "total_competitors": 16,
+    "last_updated": "2025-11-10T13:17:59.447880",
+    "total_competitors": 17,
     "notes": "Competitor data based on public information and market research. Pricing and features subject to change."
   }
 }
