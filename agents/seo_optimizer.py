@@ -12,6 +12,7 @@ from agent_framework import BaseAgent, AgentMessage, AgentResponse
 import google.generativeai as genai
 import time
 import json
+import re
 
 
 class SEOOptimizationAgent(BaseAgent):
@@ -27,6 +28,12 @@ class SEOOptimizationAgent(BaseAgent):
             self.genai_model = genai.GenerativeModel(model)
         else:
             self.genai_model = genai.GenerativeModel('gemini-2.0-flash-exp')
+
+    def _strip_markdown_json(self, text: str) -> str:
+        """Strip markdown code blocks from JSON response"""
+        text = re.sub(r'^```(?:json)?\s*\n', '', text.strip(), flags=re.MULTILINE)
+        text = re.sub(r'\n```\s*$', '', text.strip(), flags=re.MULTILINE)
+        return text.strip()
 
     def execute(self, message: AgentMessage) -> AgentResponse:
         """Generate SEO metadata"""
@@ -108,7 +115,9 @@ Return ONLY valid JSON."""
                 )
             )
 
-            metadata = json.loads(response.text)
+            # Strip markdown code blocks before parsing
+            cleaned_text = self._strip_markdown_json(response.text)
+            metadata = json.loads(cleaned_text)
 
             # Validate character counts
             if len(metadata['meta_title']) < 50 or len(metadata['meta_title']) > 60:
@@ -119,14 +128,45 @@ Return ONLY valid JSON."""
             print(f"  ✓ SEO metadata generated")
             return metadata
 
+        except json.JSONDecodeError as e:
+            print(f"  ❌ SEO JSON parsing error: {e}")
+            print(f"  📄 Raw response (first 300 chars): {response.text[:300]}")
+            return self._create_fallback_metadata(h1, pattern_id, variables)
         except Exception as e:
-            print(f"  ⚠️ Error generating metadata: {e}")
-            # Fallback metadata
-            return {
-                "meta_title": f"{h1} | Sozee",
-                "meta_description": f"{h1}. AI-powered content generation for creators. Start your free trial today and transform your workflow.",
-                "focus_keyword": h1.lower()
-            }
+            print(f"  ❌ Error generating SEO metadata: {e}")
+            import traceback
+            traceback.print_exc()
+            return self._create_fallback_metadata(h1, pattern_id, variables)
+
+    def _create_fallback_metadata(self, h1: str, pattern_id: str, variables: dict) -> dict:
+        """Create pattern-specific fallback metadata"""
+        competitor = variables.get('competitor', '')
+        audience = variables.get('audience', 'creators')
+
+        # Truncate H1 for title if needed
+        meta_title = f"{h1} | Sozee"
+        if len(meta_title) > 60:
+            # Shorten by removing "| Sozee"  and adding it back
+            truncated_h1 = h1[:50] + "..."
+            meta_title = f"{truncated_h1} | Sozee"
+
+        # Pattern-specific descriptions
+        if pattern_id == '1' and competitor:
+            meta_desc = f"Compare Sozee vs {competitor} for {audience}. See features, pricing, and which AI tool solves the content crisis. Free trial available."
+        elif pattern_id == '4' and competitor:
+            meta_desc = f"Looking for a {competitor} alternative? {audience} are switching to Sozee for instant setup, hyper-realistic content, and NSFW support."
+        else:
+            meta_desc = f"{h1}. Generate unlimited hyper-realistic content from just 3 photos. Built for {audience}. Start your free trial today."
+
+        # Truncate description to 160 chars if needed
+        if len(meta_desc) > 160:
+            meta_desc = meta_desc[:157] + "..."
+
+        return {
+            "meta_title": meta_title[:60],  # Ensure limit
+            "meta_description": meta_desc[:160],  # Ensure limit
+            "focus_keyword": h1.lower()
+        }
 
     def _get_pattern_meta_examples(self, pattern_id: str, variables: dict) -> str:
         """Get pattern-specific meta description examples"""

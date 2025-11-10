@@ -12,6 +12,7 @@ from agent_framework import BaseAgent, AgentMessage, AgentResponse
 import google.generativeai as genai
 import time
 import json
+import re
 
 
 class CopywritingAgent(BaseAgent):
@@ -28,6 +29,13 @@ class CopywritingAgent(BaseAgent):
             self.genai_model = genai.GenerativeModel(model)
         else:
             self.genai_model = genai.GenerativeModel('gemini-2.0-flash-exp')
+
+    def _strip_markdown_json(self, text: str) -> str:
+        """Strip markdown code blocks from JSON response"""
+        # Remove ```json ... ``` or ``` ... ``` blocks
+        text = re.sub(r'^```(?:json)?\s*\n', '', text.strip(), flags=re.MULTILINE)
+        text = re.sub(r'\n```\s*$', '', text.strip(), flags=re.MULTILINE)
+        return text.strip()
 
     def execute(self, message: AgentMessage) -> AgentResponse:
         """Generate compelling landing page copy"""
@@ -173,7 +181,9 @@ Return ONLY valid JSON."""
                 )
             )
 
-            content = json.loads(response.text)
+            # Strip markdown code blocks before parsing
+            cleaned_text = self._strip_markdown_json(response.text)
+            content = json.loads(cleaned_text)
 
             # Add pattern-specific sections
             content['pattern_sections'] = pattern_sections
@@ -181,22 +191,95 @@ Return ONLY valid JSON."""
             print(f"  ✓ Content generation complete ({len(pattern_sections)} pattern-specific sections)")
             return content
 
+        except json.JSONDecodeError as e:
+            print(f"  ❌ JSON parsing error: {e}")
+            print(f"  📄 Raw response (first 500 chars): {response.text[:500]}")
+            return self._create_fallback_content(h1, variables, research_data, viral_hook, pattern_config)
         except Exception as e:
-            print(f"  ⚠️ Error generating content: {e}")
-            # Return minimal content
-            return {
-                "hero": {
-                    "h1": blueprint.get('h1', 'Sozee AI Content Studio'),
-                    "subtitle": "Transform your content creation workflow",
-                    "primary_cta": "Get Started Free",
-                    "secondary_cta": "Learn More"
-                },
-                "problem": f"# The Challenge\n\n{viral_hook}",
-                "solution": "Sozee solves this with AI-powered content generation.",
-                "features": [],
-                "comparison_table": [],
-                "final_cta": "Ready to transform your content? Start your free trial today."
+            print(f"  ❌ Error generating content: {e}")
+            import traceback
+            traceback.print_exc()
+            return self._create_fallback_content(h1, variables, research_data, viral_hook, pattern_config)
+
+    def _create_fallback_content(self, h1: str, variables: dict, research_data: dict, viral_hook: str, pattern_config: dict) -> dict:
+        """Create improved fallback content using research data and correct H1"""
+
+        competitor = variables.get('competitor', '')
+        audience = variables.get('audience', 'creators')
+
+        # Extract research insights if available
+        audience_data = research_data.get('Audience_Insight_Agent', {})
+        competitor_data = research_data.get('Competitor_Research_Agent', {})
+
+        pain_points = audience_data.get('pain_points', [])
+        pain_point_text = pain_points[0] if pain_points else "Content creation bottlenecks slow down growth"
+
+        # Build pattern-specific problem section
+        if competitor:
+            problem = f"""# The Challenge with {competitor}
+
+{viral_hook}
+
+Many {audience} struggle with traditional AI tools that don't understand the creator economy. The Content Crisis is real: fans demand 100x more content than creators can produce.
+
+**Common pain points:**
+- Content production bottlenecks
+- Inconsistent quality and likeness
+- Time-consuming workflows
+- Limited creative freedom"""
+        else:
+            problem = f"""# The Challenge
+
+{viral_hook}
+
+{audience} face the Content Crisis: fans want 100 pieces of content, but you can only produce 1. This creates burnout, unstable revenue, and growth limits.
+
+**The reality:**
+- Traditional photoshoots: 1 session → 10-20 photos
+- Audience demands: 50-100+ posts per week
+- Result: Creator burnout and business instability"""
+
+        # Build solution section
+        solution = f"""## How Sozee Solves This
+
+Sozee breaks the link between physical availability and content production. Upload just 3 photos and generate unlimited hyper-realistic content forever.
+
+**Key benefits:**
+- **3 photos minimum** - Instant likeness reconstruction, no training
+- **Hyper-realistic output** - Indistinguishable from real photoshoots
+- **Complete privacy** - Your likeness is yours alone
+- **SFW & NSFW** - Full creative freedom for {audience}"""
+
+        # Build features
+        features = [
+            {
+                "title": "Instant Setup (3 Photos)",
+                "content": "No training, no waiting. Upload 3 photos and start generating unlimited content immediately."
+            },
+            {
+                "title": "Hyper-Realistic Content",
+                "content": "Generate photos and videos indistinguishable from real photoshoots. Perfect likeness consistency every time."
+            },
+            {
+                "title": "Built for Creators",
+                "content": f"Designed specifically for {audience} with OnlyFans/Fansly workflows, NSFW support, and monetization-first features."
             }
+        ]
+
+        return {
+            "hero": {
+                "h1": h1,
+                "eyebrow": pattern_config.get('eyebrow', ''),
+                "subtitle": f"Generate unlimited hyper-realistic content from just 3 photos. Built for {audience}.",
+                "primary_cta": pattern_config.get('primary_cta', 'Get Started Free'),
+                "secondary_cta": pattern_config.get('secondary_cta', 'See How It Works')
+            },
+            "problem": problem,
+            "solution": solution,
+            "features": features,
+            "comparison_table": [],
+            "final_cta": f"Ready to solve the Content Crisis? Start your free trial and see why {audience} are switching to Sozee."
+        }
 
     def _generate_pattern_sections(self, pattern_id: str, variables: dict, research_data: dict, h1: str, pattern_config: dict) -> dict:
         """Generate pattern-specific sections based on section_templates.json"""
@@ -307,11 +390,17 @@ Return ONLY valid JSON matching this structure."""
                 )
             )
 
-            section_content = json.loads(response.text)
+            # Strip markdown code blocks before parsing
+            cleaned_text = self._strip_markdown_json(response.text)
+            section_content = json.loads(cleaned_text)
             return section_content
 
+        except json.JSONDecodeError as e:
+            print(f"  ❌ JSON parsing error in section {section_id}: {e}")
+            print(f"  📄 Raw response (first 300 chars): {response.text[:300]}")
+            return {}
         except Exception as e:
-            print(f"  ⚠️ Error generating section {section_id}: {e}")
+            print(f"  ❌ Error generating section {section_id}: {e}")
             return {}
 
     def _load_section_templates(self) -> dict:
@@ -369,15 +458,18 @@ Return ONLY valid JSON matching this structure."""
         # Replace variables in formula
         h1 = h1_formula
         for var_name, var_value in variables.items():
-            # Try .title() first (for multi-word variables like use_case)
-            placeholder_title = f'{{{var_name.replace("_", " ").title().replace(" ", "_")}}}'
-            if placeholder_title in h1:
-                h1 = h1.replace(placeholder_title, var_value)
+            # Try multiple placeholder formats to match pattern formulas
+            placeholders = [
+                f'{{{var_name}}}',  # {competitor}
+                f'{{{var_name.capitalize()}}}',  # {Competitor}
+                f'{{{var_name.upper()}}}',  # {COMPETITOR}
+                f'{{{var_name.replace("_", " ").title().replace(" ", "_")}}}',  # {Use_Case}
+                f'{{{var_name.replace("_", " ").title()}}}',  # {Use Case}
+            ]
 
-            # Try .capitalize() (for single words)
-            placeholder_cap = f'{{{var_name.capitalize()}}}'
-            if placeholder_cap in h1:
-                h1 = h1.replace(placeholder_cap, var_value)
+            for placeholder in placeholders:
+                if placeholder in h1:
+                    h1 = h1.replace(placeholder, var_value)
 
         return h1
 
