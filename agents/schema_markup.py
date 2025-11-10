@@ -183,10 +183,14 @@ class SchemaMarkupAgent(BaseAgent):
                 "availability": "https://schema.org/InStock",
                 "url": "https://sozee.ai/pricing"
             },
+            # ⚠️  IMPORTANT: Rating data should be based on actual reviews
+            # These values should be updated to reflect real customer ratings
+            # False or misleading ratings violate Google's structured data guidelines
+            # Only include aggregateRating if you have legitimate review data
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "reviewCount": "250",
+                "ratingValue": "4.8",  # TODO: Replace with actual rating data
+                "reviewCount": "250",   # TODO: Replace with actual review count
                 "bestRating": "5",
                 "worstRating": "1"
             }
@@ -212,10 +216,13 @@ class SchemaMarkupAgent(BaseAgent):
                     "unitText": "WEEK"
                 }
             },
+            # ⚠️  IMPORTANT: Rating data should be based on actual reviews
+            # These values should be updated to reflect real customer ratings
+            # False or misleading ratings violate Google's structured data guidelines
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "reviewCount": "250",
+                "ratingValue": "4.8",  # TODO: Replace with actual rating data
+                "reviewCount": "250",   # TODO: Replace with actual review count
                 "bestRating": "5"
             },
             "featureList": [

@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 """
-Sozee Landing Page Generator
+Sozee Landing Page Generator - Simple Single-API-Call Approach
+==============================================================
+
+⚠️  ALTERNATIVE IMPLEMENTATION NOTICE:
+This is a simplified, single-API-call generator for fast generation (60-100 pages/hour).
+For research-intensive, high-quality pages, use pseo_orchestrator.py with the multi-agent system.
+
+Use Cases:
+- Quick testing and prototyping
+- Mid/top-funnel content with less research needs
+- Fast generation when quality requirements are lower
+
+For Production Use:
+- Use batch_generator.py with PSEOOrchestrator for full multi-agent pipeline
+- See TESTING_GUIDE.md for comparison of both approaches
+
 Generates 678 SEO-optimized landing pages using Google Gemini API
 """
 

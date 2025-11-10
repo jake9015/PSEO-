@@ -20,8 +20,7 @@ class CompetitorResearchAgent(ResearchAgent):
         super().__init__(
             name="Competitor_Research_Agent",
             role="AI Tool Market Analyst & Intelligence Gatherer",
-            model=model,
-            tools=['web_search', 'web_fetch']
+            model=model
         )
         if model:
             self.genai_model = genai.GenerativeModel(model)
@@ -52,8 +51,7 @@ class CompetitorResearchAgent(ResearchAgent):
                 confidence=0.9
             )
 
-        # In production, this would use web search APIs
-        # For now, using Gemini's knowledge with explicit instructions
+        # Use Gemini AI to research competitor (AI-based research, not web scraping)
         research_data = self._research_competitor(competitor, audience, required_data)
 
         # Cache results
