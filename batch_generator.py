@@ -305,8 +305,8 @@ class BatchProcessor:
                     variables=variables
                 )
 
-                # Convert to dict
-                page_dict = page.to_dict()
+                # Convert to dict (use public export - excludes internal metadata)
+                page_dict = page.to_dict_public()
                 generated_pages.append(page_dict)
 
                 # Save individual page
@@ -364,7 +364,12 @@ class BatchProcessor:
         return 0
 
     def save_to_csv(self, pages: List[Dict], filename: str):
-        """Save generated pages to CSV for WordPress import"""
+        """
+        Save generated pages to CSV for WordPress import.
+
+        Only includes keyword-relevant content and SEO-optimized fields.
+        Excludes internal metadata (quality scores, agent tracking, etc.)
+        """
 
         # Flatten for CSV
         flattened = []
@@ -385,16 +390,10 @@ class BatchProcessor:
                 "faq_json": json.dumps(page["faq_json"]),
                 "comparison_table_json": json.dumps(page.get("comparison_table_json", [])),
                 "feature_sections_json": json.dumps(page.get("feature_sections", [])),
+                "schema_markup_json": json.dumps(page.get("schema_markup", [])),
                 "final_cta": page["final_cta"],
-                "quality_score": page["quality_score"],
-                "uniqueness_check": page["uniqueness_check"],
-                "generated_at": page["generated_at"],
-                "generation_model": page["generation_model"]
+                "generated_at": page["generated_at"]
             }
-
-            # Add variables as columns
-            for key, value in page["pseo_variables"].items():
-                flat[f"variable_{key}"] = value
 
             flattened.append(flat)
 

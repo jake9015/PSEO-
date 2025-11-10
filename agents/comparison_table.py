@@ -87,12 +87,13 @@ class ComparisonTableAgent(BaseAgent):
 **CRITICAL REQUIREMENTS:**
 1. **Be 100% FACTUAL** - Only use data from Sozee features above and competitor research data
 2. **Focus on differentiation** - Choose features where Sozee has clear advantages
-3. **Use specific values** - "30 minutes" not "fast", "$15/week" not "affordable"
+3. **Use specific values** - "3 photos, instant" not "fast", "$15/week" not "affordable"
 4. **Include these key categories**:
-   - LORA Training (time, customization)
+   - Setup Time (3 photos minimum, instant vs training time)
    - Content Type Support (SFW/NSFW)
    - Platform Focus (OnlyFans, creator-specific)
    - Ease of Use (technical skills required)
+   - Privacy (isolated models, ownership)
    - Pricing (actual costs)
    - Speed (generation time)
    - Special Features (1-click TikTok cloning, etc.)
@@ -111,9 +112,9 @@ class ComparisonTableAgent(BaseAgent):
 **OUTPUT AS JSON ARRAY:**
 [
   {{
-    "feature": "Feature name (e.g., 'LORA Training Time')",
-    "sozee": "Sozee's specific value (e.g., '30 minutes')",
-    "competitor": "Competitor's value from research (e.g., '2-3 hours' or 'Not specified')",
+    "feature": "Feature name (e.g., 'Setup Time')",
+    "sozee": "Sozee's specific value (e.g., '3 photos, instant')",
+    "competitor": "Competitor's value from research (e.g., 'Training required' or 'Not specified')",
     "sozee_advantage": true/false (Is this a clear Sozee advantage?)
   }}
 ]
