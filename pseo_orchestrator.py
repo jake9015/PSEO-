@@ -77,7 +77,8 @@ class AgentManager:
         self.message_log.append(message.to_dict())
 
         # Execute task
-        agent_key = to_agent.lower().replace('_agent', '').replace('_', '')
+        # Normalize requested agent name to our registry keys (which keep underscores)
+        agent_key = to_agent.lower().replace('_agent', '')
         agent = self.agents.get(agent_key)
 
         if not agent:
@@ -225,7 +226,7 @@ class PSEOOrchestrator:
                 'agent': 'Statistics_Agent',
                 'params': {
                     'pattern_id': pattern_id,
-                    'topic': blueprint.h1,
+                    'topic': blueprint.pattern_name,
                     'audience': variables.get('audience', 'creators'),
                     'platform': variables.get('platform', 'social media')
                 },
