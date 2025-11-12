@@ -1,3 +1,8 @@
-google-generativeai
+# Google Gemini API - pinned to prevent breaking changes
+google-generativeai==0.8.5
+
+# Data manipulation
 pandas==2.1.4
+
+# Environment variable management
 python-dotenv==1.0.0

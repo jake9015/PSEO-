@@ -115,7 +115,11 @@ class AgentManager:
         self.message_log.append(message.to_dict())
 
         # Execute task
-        # Normalize requested agent name to our registry keys (which keep underscores)
+        # Normalize agent name to match registry keys
+        # Example: 'PSEO_Strategist_Agent' → 'pseo_strategist'
+        # This handles naming inconsistencies between callers and the agent registry
+        # Registry keys use lowercase with underscores (e.g., 'pseo_strategist', 'copywriting')
+        # Callers may use various formats (e.g., 'PSEO_Strategist_Agent', 'Copywriting_Agent')
         agent_key = to_agent.lower().replace('_agent', '')
         agent = self.agents.get(agent_key)
 
@@ -191,13 +195,17 @@ class PSEOOrchestrator:
         Generate complete landing page using multi-agent pipeline
 
         Args:
-            pattern_id: Pattern ID (1-6)
+            pattern_id: Pattern ID (1-6) - accepts both int and str, normalized to str
             variables: Dict of variables for this page
             generation_model: "Model 1" or "Model 2" or "auto"
 
         Returns:
             PageOutput object with complete page data
         """
+
+        # Normalize pattern_id to string for consistent handling throughout the pipeline
+        # patterns.json uses integer IDs but code comparisons use strings
+        pattern_id = str(pattern_id)
 
         print(f"\n{'='*70}")
         print(f"🚀 GENERATING PAGE: Pattern {pattern_id}")
@@ -219,7 +227,12 @@ class PSEOOrchestrator:
         )
 
         if blueprint_response.status != 'completed':
-            raise Exception("Blueprint creation failed")
+            error_details = blueprint_response.data if hasattr(blueprint_response, 'data') else "No details available"
+            raise Exception(
+                f"Blueprint creation failed with status: {blueprint_response.status}\n"
+                f"Details: {error_details}\n"
+                f"Check PSEO Strategist Agent logs above for more information."
+            )
 
         blueprint_dict = blueprint_response.data['blueprint']
         agent_tasks = blueprint_response.data['agent_task_list']
@@ -303,7 +316,16 @@ class PSEOOrchestrator:
         )
 
         if content_response.status != 'completed':
-            raise Exception("Content generation failed")
+            error_details = content_response.data if hasattr(content_response, 'data') else "No details available"
+            raise Exception(
+                f"Content generation failed with status: {content_response.status}\n"
+                f"Details: {error_details}\n"
+                f"Possible causes:\n"
+                f"  - API rate limits reached\n"
+                f"  - Invalid research data format\n"
+                f"  - Missing required variables\n"
+                f"Check Copywriting Agent logs above for specific errors."
+            )
 
         content = content_response.data['content']
         print(f"  ✓ Content generated")
@@ -498,8 +520,13 @@ class PSEOOrchestrator:
                 break
 
         if not pattern:
-            raise ValueError(f"Pattern ID '{pattern_id}' not found in pattern library. "
-                           f"Available patterns: {[p.get('id') for p in self.pattern_library.get('patterns', [])]}")
+            available_ids = [str(p.get('id')) for p in self.pattern_library.get('patterns', [])]
+            raise ValueError(
+                f"Pattern ID '{pattern_id}' not found in pattern library.\n"
+                f"Available pattern IDs: {', '.join(available_ids)}\n"
+                f"Check config/patterns.json to verify pattern configuration.\n"
+                f"If adding a new pattern, ensure it's properly registered in patterns.json."
+            )
 
         # Use url_formula from pattern
         url_formula = pattern.get('url_formula', '/sozee')

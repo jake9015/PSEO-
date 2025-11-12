@@ -112,7 +112,10 @@ def load_variables(config_dir: str = 'config') -> Dict[str, Any]:
 
 def safe_json_parse(text: str) -> Dict[str, Any]:
     """
-    Safely parse JSON from AI response, handling markdown code blocks
+    Safely parse JSON from AI response, handling markdown code blocks.
+
+    AI models (like Gemini) often wrap JSON responses in markdown code blocks.
+    This function strips those wrappers to extract the raw JSON.
 
     Args:
         text: Text containing JSON (possibly wrapped in markdown)
@@ -126,27 +129,35 @@ def safe_json_parse(text: str) -> Dict[str, Any]:
     Example:
         >>> safe_json_parse('```json\\n{"key": "value"}\\n```')
         {'key': 'value'}
+        >>> safe_json_parse('{"key": "value"}')  # Also handles plain JSON
+        {'key': 'value'}
     """
 
     # Remove leading/trailing whitespace
     text = text.strip()
 
-    # Remove markdown code blocks
+    # Handle markdown code blocks - AI responses often come wrapped in these
+    # Format 1: ```json\n{...}\n```  (most common from Gemini)
     if text.startswith('```json'):
+        # Split on first occurrence, take everything after ```json
         text = text.split('```json', 1)[1]
+    # Format 2: ```\n{...}\n```  (generic code block)
     elif text.startswith('```'):
         text = text.split('```', 1)[1]
 
+    # Remove trailing code block marker if present
     if text.endswith('```'):
+        # Split on last occurrence, take everything before ```
         text = text.rsplit('```', 1)[0]
 
-    # Clean up again after removing code blocks
+    # Clean up again after removing code blocks (may have extra newlines)
     text = text.strip()
 
-    # Parse JSON
+    # Parse JSON - at this point we should have clean JSON text
     try:
         return json.loads(text)
     except json.JSONDecodeError as e:
+        # Log details for debugging (truncate to first 200 chars to avoid log spam)
         logger.error(f"Failed to parse JSON: {e}")
         logger.error(f"Text content: {text[:200]}...")
         raise

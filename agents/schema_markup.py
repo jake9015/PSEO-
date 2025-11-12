@@ -18,6 +18,14 @@ from datetime import datetime
 class SchemaMarkupAgent(BaseAgent):
     """Generates Schema.org structured data for SEO"""
 
+    # ⚠️  RATING PLACEHOLDERS - UPDATE WITH ACTUAL REVIEW DATA
+    # These are placeholder values for schema markup. Replace with real metrics from your review system.
+    # False or misleading ratings violate Google's structured data guidelines.
+    # Only include aggregateRating if you have legitimate, verified review data.
+    # To update: modify these constants with actual values from your customer review database.
+    PLACEHOLDER_RATING = "4.8"
+    PLACEHOLDER_REVIEW_COUNT = "250"
+
     def __init__(self, model=None):
         super().__init__(
             name="Schema_Markup_Agent",
@@ -183,14 +191,11 @@ class SchemaMarkupAgent(BaseAgent):
                 "availability": "https://schema.org/InStock",
                 "url": "https://sozee.ai/pricing"
             },
-            # ⚠️  IMPORTANT: Rating data should be based on actual reviews
-            # These values should be updated to reflect real customer ratings
-            # False or misleading ratings violate Google's structured data guidelines
-            # Only include aggregateRating if you have legitimate review data
+            # Using placeholder values - see PLACEHOLDER_RATING constants at top of class
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.8",  # TODO: Replace with actual rating data
-                "reviewCount": "250",   # TODO: Replace with actual review count
+                "ratingValue": self.PLACEHOLDER_RATING,
+                "reviewCount": self.PLACEHOLDER_REVIEW_COUNT,
                 "bestRating": "5",
                 "worstRating": "1"
             }
@@ -216,13 +221,11 @@ class SchemaMarkupAgent(BaseAgent):
                     "unitText": "WEEK"
                 }
             },
-            # ⚠️  IMPORTANT: Rating data should be based on actual reviews
-            # These values should be updated to reflect real customer ratings
-            # False or misleading ratings violate Google's structured data guidelines
+            # Using placeholder values - see PLACEHOLDER_RATING constants at top of class
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.8",  # TODO: Replace with actual rating data
-                "reviewCount": "250",   # TODO: Replace with actual review count
+                "ratingValue": self.PLACEHOLDER_RATING,
+                "reviewCount": self.PLACEHOLDER_REVIEW_COUNT,
                 "bestRating": "5"
             },
             "featureList": [

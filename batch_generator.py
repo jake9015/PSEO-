@@ -48,39 +48,9 @@ from pseo_orchestrator import PSEOOrchestrator
 import os
 from dotenv import load_dotenv
 
-# Variable Libraries
-COMPETITORS = [
-    "Higgsfield", "Krea", "Midjourney", "Stability AI", "Runway",
-    "Leonardo AI", "Civitai", "Fooocus", "InvokeAI", "ComfyUI",
-    "Automatic1111", "Foxy AI", "Supercreator", "Glambase", "DeepMode"
-]
-
-PLATFORMS = [
-    "OnlyFans", "Patreon", "FanVue", "Fansly", "LoyalFans",
-    "Fancentro", "ManyVids", "AVN Stars", "JustForFans", "Fanfix",
-    "Instagram", "TikTok", "Reddit", "Twitter"
-]
-
-AUDIENCES = [
-    "OnlyFans Creators", "OnlyFans Agencies", "Content Creators",
-    "Adult Content Creators", "Models", "Influencers",
-    "Photographers", "Social Media Managers"
-]
-
-USE_CASES = [
-    "AI Photo Generation", "AI Video Generation", "TikTok Cloning",
-    "Virtual Photoshoot", "LORA Training", "Content Scaling",
-    "NSFW Content", "SFW Content", "Photo Editing",
-    "Face Swapping", "Background Replacement", "Outfit Changes",
-    "Location Changes", "Pose Generation"
-]
-
-PAIN_POINTS = [
-    "Creator Burnout", "Content Bottleneck", "Revenue Instability",
-    "Photoshoot Costs", "Creative Fatigue", "Time Constraints",
-    "Perfectionism", "Inconsistent Output", "Creator Dependency",
-    "Scheduling Difficulties"
-]
+# ⚠️ IMPORTANT: Variable lists are now loaded from config/variables.json
+# This prevents duplication and ensures consistency across the codebase.
+# To add new competitors/platforms/audiences, update config/variables.json instead of here.
 
 # Pattern Combinations - Maps to patterns.json
 PATTERN_DEFINITIONS = {
@@ -154,22 +124,45 @@ ROLLOUT_PHASES = {
 
 
 class PSEOMatrixGenerator:
-    """Generates the complete PSEO page matrix from patterns and variables"""
+    """
+    Generates the complete PSEO page matrix from patterns and variables.
 
-    def __init__(self):
+    Loads variable lists from config/variables.json to ensure consistency
+    across the codebase and prevent duplication.
+    """
+
+    def __init__(self, variables_config: Dict = None):
+        """
+        Initialize matrix generator with variables from config.
+
+        Args:
+            variables_config: Optional pre-loaded variables config.
+                            If None, will load from config/variables.json
+        """
+        # Load variables from config file if not provided
+        if variables_config is None:
+            config_path = os.path.join('config', 'variables.json')
+            with open(config_path, 'r') as f:
+                variables_config = json.load(f)
+
+        # Extract 'all' lists from each variable category in config
         self.variables = {
-            "competitor": COMPETITORS,
-            "platform": PLATFORMS,
-            "audience": AUDIENCES,
-            "use_case": USE_CASES,
-            "pain_point": PAIN_POINTS,
-            "tool_type": [
-                "AI Photo Generator", "AI Video Generator", "AI Content Studio",
-                "LORA Training Tool", "TikTok Clone Tool", "AI Creator Platform",
-                "NSFW AI Tool", "Content Automation Tool", "AI Model Training Tool",
-                "Creator AI Assistant"
+            "competitor": variables_config.get('competitors', {}).get('all', []),
+            "platform": variables_config.get('platforms', {}).get('all', []),
+            "audience": variables_config.get('audiences', {}).get('all', []),
+            "use_case": variables_config.get('use_cases', {}).get('all', []),
+            "tool_type": variables_config.get('tool_types', {}).get('all', []),
+            # Note: pain_points not in variables.json, keeping minimal default
+            "pain_point": [
+                "Creator Burnout", "Content Bottleneck", "Revenue Instability"
             ]
         }
+
+        # Validate that we loaded variables successfully
+        if not self.variables.get("competitor"):
+            print("⚠️ Warning: No competitors loaded from config")
+        if not self.variables.get("platform"):
+            print("⚠️ Warning: No platforms loaded from config")
 
     def generate_matrix(self, patterns: List[str] = None) -> pd.DataFrame:
         """Generate all possible page combinations"""
@@ -197,23 +190,48 @@ class PSEOMatrixGenerator:
         return df
 
     def _generate_combinations(self, pattern_id: str, required_vars: List[str]) -> List[Dict]:
-        """Generate all combinations for a specific pattern"""
+        """
+        Generate all combinations for a specific pattern.
 
+        This method creates a Cartesian product of all variable lists required
+        by a pattern. For example, if a pattern needs ['competitor', 'audience']
+        and we have 15 competitors and 8 audiences, this generates 15 × 8 = 120 pages.
+
+        Args:
+            pattern_id: The pattern ID (e.g., '1' for Competitor Comparison)
+            required_vars: List of variable names needed (e.g., ['competitor', 'audience'])
+
+        Returns:
+            List of dicts, each representing one page's variables
+
+        Example:
+            Input: pattern_id='1', required_vars=['competitor', 'audience']
+            Output: [
+                {'pattern_id': '1', 'priority': 'HIGH', 'competitor': 'Higgsfield', 'audience': 'Creators'},
+                {'pattern_id': '1', 'priority': 'HIGH', 'competitor': 'Higgsfield', 'audience': 'Agencies'},
+                ...
+            ]
+        """
         import itertools
 
-        # Get variable lists
+        # Get variable lists from loaded config
+        # e.g., if required_vars = ['competitor', 'audience'], get both lists
         var_lists = [self.variables.get(var, []) for var in required_vars]
 
-        # Check for empty variable lists
+        # Check for empty variable lists (indicates config issue)
         if any(len(vlist) == 0 for vlist in var_lists):
             print(f"⚠️ Missing variables for pattern {pattern_id}: {required_vars}")
+            print(f"   Available: {list(self.variables.keys())}")
             return []
 
-        # Generate cartesian product
+        # Generate Cartesian product (all possible combinations)
+        # itertools.product(['A', 'B'], ['X', 'Y']) → [('A','X'), ('A','Y'), ('B','X'), ('B','Y')]
         combos = []
         for combo in itertools.product(*var_lists):
+            # Map variable names to values: ('Higgsfield', 'Creators') → {'competitor': 'Higgsfield', 'audience': 'Creators'}
             variables = dict(zip(required_vars, combo))
 
+            # Add pattern metadata
             combos.append({
                 "pattern_id": pattern_id,
                 "priority": PATTERN_DEFINITIONS[pattern_id]["priority"],
@@ -464,8 +482,8 @@ def main():
     print("🔧 Initializing orchestrator...")
     orchestrator = PSEOOrchestrator(config)
 
-    # Initialize generators
-    matrix_gen = PSEOMatrixGenerator()
+    # Initialize generators (pass variables_data to avoid duplication)
+    matrix_gen = PSEOMatrixGenerator(variables_config=variables_data)
     processor = BatchProcessor(orchestrator, output_dir=args.output_dir)
 
     # Check for checkpoint
