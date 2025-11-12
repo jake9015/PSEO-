@@ -12,6 +12,7 @@ from agent_framework import BaseAgent, AgentMessage, AgentResponse
 import google.generativeai as genai
 import time
 import json
+import re
 
 
 class ComparisonTableAgent(BaseAgent):
@@ -30,6 +31,12 @@ class ComparisonTableAgent(BaseAgent):
 
         # Load competitor knowledge base
         self.competitor_profiles = self._load_competitor_profiles()
+
+    def _strip_markdown_json(self, text: str) -> str:
+        """Strip markdown code blocks from JSON response"""
+        text = re.sub(r'^```(?:json)?\s*\n', '', text.strip(), flags=re.MULTILINE)
+        text = re.sub(r'\n```\s*$', '', text.strip(), flags=re.MULTILINE)
+        return text.strip()
 
     def _load_competitor_profiles(self) -> dict:
         """Load competitor knowledge base from config"""
@@ -137,12 +144,14 @@ class ComparisonTableAgent(BaseAgent):
   {{
     "feature": "Feature name (e.g., 'Setup Time')",
     "sozee": "Sozee's specific value (e.g., '3 photos, instant')",
-    "competitor": "Competitor's value from research (e.g., 'Training required' or 'Not specified')",
+    "competitor": "Competitor's value from KB/research (e.g., 'Requires 10-20 images and 30-60 min training')",
     "sozee_advantage": true/false (Is this a clear Sozee advantage?)
   }}
 ]
 
-Return ONLY valid JSON array with 6-8 comparison rows.
+**CRITICAL**: NEVER use "Not specified" as a value. Always use specific data from research/KB, or use descriptive category-level comparisons like "Requires training", "No NSFW support", "General purpose tool", "Standard cloud storage", etc.
+
+Return ONLY valid JSON array with 6-8 comparison rows. NO markdown code blocks.
 Prioritize features where Sozee has clear advantages for {audience}."""
 
         try:
@@ -154,7 +163,9 @@ Prioritize features where Sozee has clear advantages for {audience}."""
                 )
             )
 
-            comparison_table = json.loads(response.text)
+            # Strip markdown and parse JSON
+            cleaned_text = self._strip_markdown_json(response.text)
+            comparison_table = json.loads(cleaned_text)
 
             # Validate table structure
             if not isinstance(comparison_table, list):
@@ -173,8 +184,15 @@ Prioritize features where Sozee has clear advantages for {audience}."""
             print(f"  ✓ Generated comparison table with {len(comparison_table)} features")
             return comparison_table
 
+        except json.JSONDecodeError as e:
+            print(f"  ❌ JSON parsing error in comparison table: {e}")
+            print(f"  📄 Raw response (first 300 chars): {response.text[:300] if 'response' in locals() else 'No response'}")
+            # Return fallback comparison table with KB data
+            return self._get_fallback_comparison_table(competitor)
         except Exception as e:
             print(f"  ⚠️ Error generating comparison table: {e}")
+            import traceback
+            traceback.print_exc()
             # Return fallback comparison table with factual Sozee data
             return self._get_fallback_comparison_table(competitor)
 
