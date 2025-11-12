@@ -444,7 +444,8 @@ def main():
     if os.path.exists('config/viral_hooks.json'):
         with open('config/viral_hooks.json', 'r') as f:
             hooks_data = json.load(f)
-            viral_hooks = hooks_data.get('hooks', [])
+            # Use manifesto_hooks (brand-specific), NOT generic hooks
+            viral_hooks = hooks_data.get('manifesto_hooks', [])
 
     # Create orchestrator config
     config = {
